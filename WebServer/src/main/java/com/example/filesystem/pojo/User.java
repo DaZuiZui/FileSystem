@@ -1,4 +1,4 @@
-package com.example.filesystem.domain;
+package com.example.filesystem.pojo;
 
 import java.io.Serializable;
 

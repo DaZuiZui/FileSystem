@@ -1,6 +1,6 @@
 package com.example.filesystem.util;
 
-import com.example.filesystem.domain.User;
+import com.example.filesystem.pojo.User;
 import io.jsonwebtoken.*;
 import java.util.Date;
 import java.util.HashMap;

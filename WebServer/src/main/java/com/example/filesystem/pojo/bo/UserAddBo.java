@@ -5,38 +5,39 @@ import com.example.filesystem.pojo.User;
 import java.io.Serializable;
 
 public class UserAddBo implements Serializable {
-    private String token;
-    private User user;
+    private String username;
+
+    private String password;
     private UserAddBo(){
 
     }
 
-    public UserAddBo(String token, User user) {
-        this.token = token;
-        this.user = user;
+    public UserAddBo(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    public String getToken() {
-        return token;
+    public String getUsername() {
+        return username;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public User getUser() {
-        return user;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String toString() {
         return "UserAddBo{" +
-                "token='" + token + '\'' +
-                ", user=" + user +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

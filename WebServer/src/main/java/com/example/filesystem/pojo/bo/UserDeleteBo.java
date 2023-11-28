@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class UserDeleteBo implements Serializable {
     private String token;
-    private String id;
+    private Long id;
     public UserDeleteBo(){
 
     }
 
-    public UserDeleteBo(String token, String id) {
+    public UserDeleteBo(String token, Long id) {
         this.token = token;
         this.id = id;
     }
@@ -22,11 +22,11 @@ public class UserDeleteBo implements Serializable {
         this.token = token;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -34,7 +34,7 @@ public class UserDeleteBo implements Serializable {
     public String toString() {
         return "UserDeleteBo{" +
                 "token='" + token + '\'' +
-                ", id='" + id + '\'' +
+                ", id=" + id +
                 '}';
     }
 }

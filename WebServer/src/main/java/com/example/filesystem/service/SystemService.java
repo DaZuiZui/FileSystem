@@ -15,6 +15,8 @@ import java.io.IOException;
  */
 @Service
 public interface SystemService {
+
+
     /**
      * 鉴权
      * @param token

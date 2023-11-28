@@ -1,19 +1,22 @@
 package com.example.filesystem.pojo;
 
-import javax.xml.crypto.Data;
 import java.io.Serializable;
+import java.util.Date;
 
 public class User implements Serializable {
     private Long id;
     private String username;
     private String password;
-    private Long role;
+    private String name;
+    private Long grade;
+    private String org;
+    private Integer role;
     private Long createBy;
-    private Data createTime;
+    private Date createTime;
     private Long updateBy;
-    private Data updateTime;
-    private Long status;
-    private Long del_flag;
+    private Date updateTime;
+    private Integer status;
+    private Integer delFlag;
 
     public User(){
 
@@ -43,11 +46,35 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Long getRole() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Long grade) {
+        this.grade = grade;
+    }
+
+    public String getOrg() {
+        return org;
+    }
+
+    public void setOrg(String org) {
+        this.org = org;
+    }
+
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(Long role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 
@@ -59,11 +86,11 @@ public class User implements Serializable {
         this.createBy = createBy;
     }
 
-    public Data getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Data createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
@@ -75,28 +102,44 @@ public class User implements Serializable {
         this.updateBy = updateBy;
     }
 
-    public Data getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Data updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
-    public Long getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Long status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public Long getDel_flag() {
-        return del_flag;
+    public Integer getDelFlag() {
+        return delFlag;
     }
 
-    public void setDel_flag(Long del_flag) {
-        this.del_flag = del_flag;
+    public void setDelFlag(Integer delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    public User(Long id, String username, String password, String name, Long grade, String org, Integer role, Long createBy, Date createTime, Long updateBy, Date updateTime, Integer status, Integer delFlag) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.grade = grade;
+        this.org = org;
+        this.role = role;
+        this.createBy = createBy;
+        this.createTime = createTime;
+        this.updateBy = updateBy;
+        this.updateTime = updateTime;
+        this.status = status;
+        this.delFlag = delFlag;
     }
 
     @Override
@@ -105,26 +148,16 @@ public class User implements Serializable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", grade=" + grade +
+                ", org='" + org + '\'' +
                 ", role=" + role +
                 ", createBy=" + createBy +
                 ", createTime=" + createTime +
                 ", updateBy=" + updateBy +
                 ", updateTime=" + updateTime +
                 ", status=" + status +
-                ", del_flag=" + del_flag +
+                ", delFlag=" + delFlag +
                 '}';
-    }
-
-    public User(Long id, String username, String password, Long role, Long createBy, Data createTime, Long updateBy, Data updateTime, Long status, Long del_flag) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.createBy = createBy;
-        this.createTime = createTime;
-        this.updateBy = updateBy;
-        this.updateTime = updateTime;
-        this.status = status;
-        this.del_flag = del_flag;
     }
 }

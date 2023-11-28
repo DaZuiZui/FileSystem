@@ -2,6 +2,7 @@ package com.example.filesystem.service;
 
 import com.example.filesystem.pojo.bo.DeleteFileOrFolderBo;
 import com.example.filesystem.pojo.bo.FindOwnFileBo;
+import com.example.filesystem.pojo.bo.SelectUpdateByToFileBo;
 import com.example.filesystem.pojo.vo.ResponseVo;
 
 public interface FileService {
@@ -21,4 +22,12 @@ public interface FileService {
      * @return
      */
     ResponseVo deleteFileOrFolder(DeleteFileOrFolderBo deleteFileOrFolderBo);
+
+    /**
+     * @author hln 2023-11-28
+     *      查看修改文件的人
+     * @param selectUpdateByToFileBo
+     * @return
+     */
+    ResponseVo selectUpdateByToFile(SelectUpdateByToFileBo selectUpdateByToFileBo);
 }

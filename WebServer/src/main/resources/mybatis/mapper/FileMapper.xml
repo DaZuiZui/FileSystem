@@ -11,6 +11,10 @@
             file
         where
             path = #{path}
+        and
+            del_flag = 0
+        and
+            status = 0
     </delete>
 
     <!-- 显示自己的文件 -->
@@ -21,6 +25,20 @@
             file
         where
             create_by = #{userId}
+    </select>
+
+    <!-- 查看修改文件的人 -->
+    <select id="selectUpdateByToFile" resultType="com.example.filesystem.pojo.vo.SelectUpdateByToFileVo">
+        select
+            t1.name,t2.update_time
+        from
+            user t1
+        inner join
+            file t2
+        on
+            t2.path = #{path}
+        and
+            t2.create_by = t1.id
     </select>
 
 </mapper>

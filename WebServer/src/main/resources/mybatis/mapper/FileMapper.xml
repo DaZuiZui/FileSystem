@@ -4,5 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.filesystem.mapper.FileMapper">
 
+    <!-- 显示自己的文件 -->
+    <select id="findOwnFile" resultType="com.example.filesystem.pojo.File">
+        select
+            *
+        from
+            file
+        where
+            create_by = #{userId}
+    </select>
 
 </mapper>

@@ -80,4 +80,14 @@ public class FileController {
         return JSONArray.toJSONString(fileService.selectUpdateByToFile(selectUpdateByToFileBo));
     }
 
+    /**
+     *
+     * @param updateFileOrFolderBo
+     * @return
+     */
+    @PostMapping("/selectUpdateByToFile")
+    public String updateFileOrFolder(@RequestBody UpdateFileOrFolderBo updateFileOrFolderBo){
+
+    }
+
 }

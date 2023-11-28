@@ -16,6 +16,13 @@ import java.io.IOException;
 @Service
 public interface SystemService {
 
+    /**
+     * is amdin
+     * @param token
+     * @param leave
+     * @return
+     */
+    public ResponseVo isAdmin(String token,Integer leave);
 
     /**
      * 鉴权

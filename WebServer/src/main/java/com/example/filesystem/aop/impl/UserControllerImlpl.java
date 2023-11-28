@@ -23,7 +23,7 @@ public class UserControllerImlpl implements UserControllerAop {
         Object[] args = joinPoint.getArgs();
         UserSelectBo userSelectBo = (UserSelectBo) args[0];
         String token = userSelectBo.getToken();
-        systemService.auth(token);
+        systemService.isAdmin(token , 1);
 
         return null;
     }
@@ -34,7 +34,7 @@ public class UserControllerImlpl implements UserControllerAop {
         Object[] args = joinPoint.getArgs();
         UserDeleteBo userDeleteBo = (UserDeleteBo) args[0];
         String token = userDeleteBo.getToken();
-        systemService.auth(token);
+        systemService.isAdmin(token , 1);
         return null;
     }
 
@@ -44,7 +44,7 @@ public class UserControllerImlpl implements UserControllerAop {
         Object[] args = joinPoint.getArgs();
         UserUpdateBo userUpdateBo = (UserUpdateBo) args[0];
         String token = userUpdateBo.getToken();
-        systemService.auth(token);
+        systemService.isAdmin(token , 0);
         return null;
     }
 }

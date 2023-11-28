@@ -33,8 +33,34 @@ public class SystemServiceImpl implements SystemService {
     private String path;
     @Value("${projecturl}")
     private String projecturl;
+    @Autowired
+    private UserMapper userMapper;
 
+    @Override
+    public ResponseVo isAdmin(String token, Integer leave) {
+        //身份鉴权
+        ResponseVo auth = this.auth(token);
+        if (auth.getData() == null) {
+            return null;
+        }
 
+        String strUserId = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
+        Long userId = Long.valueOf(strUserId);
+
+        if(userId == null || userId == 0L){
+            return new ResponseVo("token解析失败",null,"0x501");
+        }
+
+        User userAdmin = userMapper.queryByUserId(userId);
+
+        if (userAdmin == null || userAdmin.getRole() < leave){
+            ThreadLocalUtil.mapThreadLocal.get().put("error","权限不足");
+            ThreadLocalUtil.mapThreadLocal.get().put("code", "0x600");
+            return new ResponseVo("权限不足",null,"0x404");
+        }
+
+        return null;
+    }
 
     /**
      * 鉴权

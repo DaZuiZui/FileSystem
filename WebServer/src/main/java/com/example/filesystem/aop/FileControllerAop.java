@@ -21,4 +21,11 @@ public interface FileControllerAop {
      */
     void deleteFileOrFolder(JoinPoint joinPoint);
 
+    /**
+     * @author hln 2023-11-28
+     *      查看修改文件的人
+     * @param joinPoint
+     */
+    void selectUpdateByToFile(JoinPoint joinPoint);
+
 }

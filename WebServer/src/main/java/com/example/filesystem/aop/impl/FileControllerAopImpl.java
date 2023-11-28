@@ -3,6 +3,7 @@ package com.example.filesystem.aop.impl;
 import com.example.filesystem.aop.FileControllerAop;
 import com.example.filesystem.pojo.bo.DeleteFileOrFolderBo;
 import com.example.filesystem.pojo.bo.FindOwnFileBo;
+import com.example.filesystem.pojo.bo.SelectUpdateByToFileBo;
 import com.example.filesystem.service.SystemService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -45,6 +46,19 @@ public class FileControllerAopImpl implements FileControllerAop {
     public void deleteFileOrFolder(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         DeleteFileOrFolderBo arg = (DeleteFileOrFolderBo) args[0];
+        String token = arg.getToken();
+        systemService.auth(token);
+    }
+
+    /**
+     * @author hln 2023-11-28
+     *      查看修改文件的人
+     * @param joinPoint
+     */
+    @Override
+    public void selectUpdateByToFile(JoinPoint joinPoint) {
+        Object[] args = joinPoint.getArgs();
+        SelectUpdateByToFileBo arg = (SelectUpdateByToFileBo) args[0];
         String token = arg.getToken();
         systemService.auth(token);
     }

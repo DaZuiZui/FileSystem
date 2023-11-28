@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.filesystem.mapper.FileMapper">
+
+    <!-- 删除文件或文件夹 -->
+    <delete id="deleteFileOrFolder">
+        delete
+        from
+            file
+        where
+            path = #{path}
+        and
+            del_flag = 0
+        and
+            status = 0
+    </delete>
+
+    <!-- 显示自己的文件 -->
+    <select id="findOwnFile" resultType="com.example.filesystem.pojo.File">
+        select
+            *
+        from
+            file
+        where
+            create_by = #{userId}
+    </select>
+
+    <!-- 查看修改文件的人 -->
+    <select id="selectUpdateByToFile" resultType="com.example.filesystem.pojo.vo.SelectUpdateByToFileVo">
+        select
+            t1.name,t2.update_time
+        from
+            user t1
+        inner join
+            file t2
+        on
+            t2.path = #{path}
+        and
+            t2.create_by = t1.id
+    </select>
+
+</mapper>

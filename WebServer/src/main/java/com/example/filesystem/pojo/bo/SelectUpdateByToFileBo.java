@@ -5,14 +5,11 @@ import java.io.Serializable;
 public class SelectUpdateByToFileBo implements Serializable {
 
     private String token;
-    private String path;//路径
+    private String serverFilename;//路径
 
-    public SelectUpdateByToFileBo(String token, String path) {
+    public SelectUpdateByToFileBo(String token, String serverFilename) {
         this.token = token;
-        this.path = path;
-    }
-
-    public SelectUpdateByToFileBo() {
+        this.serverFilename = serverFilename;
     }
 
     public String getToken() {
@@ -23,19 +20,19 @@ public class SelectUpdateByToFileBo implements Serializable {
         this.token = token;
     }
 
-    public String getPath() {
-        return path;
+    public String getServerFilename() {
+        return serverFilename;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setServerFilename(String serverFilename) {
+        this.serverFilename = serverFilename;
     }
 
     @Override
     public String toString() {
         return "SelectUpdateByToFileBo{" +
                 "token='" + token + '\'' +
-                ", path='" + path + '\'' +
+                ", serverFilename='" + serverFilename + '\'' +
                 '}';
     }
 }

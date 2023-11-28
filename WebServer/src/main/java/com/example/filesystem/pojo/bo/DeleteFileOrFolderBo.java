@@ -9,11 +9,11 @@ import java.io.Serializable;
 public class DeleteFileOrFolderBo implements Serializable {
 
     private String token;
-    private String path;
+    private String serverFilename;
 
-    public DeleteFileOrFolderBo(String token, String path) {
+    public DeleteFileOrFolderBo(String token, String serverFilename) {
         this.token = token;
-        this.path = path;
+        this.serverFilename = serverFilename;
     }
 
     public DeleteFileOrFolderBo() {
@@ -27,19 +27,19 @@ public class DeleteFileOrFolderBo implements Serializable {
         this.token = token;
     }
 
-    public String getPath() {
-        return path;
+    public String getServerFilename() {
+        return serverFilename;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setServerFilename(String serverFilename) {
+        this.serverFilename = serverFilename;
     }
 
     @Override
     public String toString() {
         return "DeleteFileOrFolderBo{" +
                 "token='" + token + '\'' +
-                ", path='" + path + '\'' +
+                ", serverFilename='" + serverFilename + '\'' +
                 '}';
     }
 }

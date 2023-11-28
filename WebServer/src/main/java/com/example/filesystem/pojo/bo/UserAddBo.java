@@ -1,13 +1,16 @@
 package com.example.filesystem.pojo.bo;
 
-import com.example.filesystem.pojo.User;
+
 
 import java.io.Serializable;
 
+/**
+ * 2023-11-28 zhuxinyu
+ * 用户登入实体类
+ */
 public class UserAddBo implements Serializable {
-    private String username;
-
-    private String password;
+    private String username;//用户账号
+    private String password;//用户密码
     private UserAddBo(){
 
     }

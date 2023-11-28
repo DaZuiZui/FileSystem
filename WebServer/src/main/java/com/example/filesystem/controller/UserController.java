@@ -24,6 +24,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * @author zhuxinyu 2023-11-28
+     *   用户登录
+     * @param userAddBo
+     * @return
+     */
     @PostMapping("/Login")
     @ApiOperation("用户登入")
     public String userAdd(@RequestBody UserAddBo userAddBo){
@@ -34,7 +40,12 @@ public class UserController {
         return JSONArray.toJSONString(userService.userAdd(userAddBo));
     }
 
-
+    /**
+     * @author zhuxinyu 2023-11-28
+     *     根据用户id删除
+     * @param userDeleteBo
+     * @return
+     */
     @PostMapping("/delete")
     @ApiOperation("删除用户通过id")
     public String userDelete(@RequestBody UserDeleteBo userDeleteBo){
@@ -46,6 +57,12 @@ public class UserController {
         return JSONArray.toJSONString(userService.userDelete(userDeleteBo));
     }
 
+    /**
+     * @author zhuxinyu 2023-11-28
+     *      根据用户id查询
+     * @param userSelectBo
+     * @return
+     */
     @PostMapping("/select")
     @ApiOperation("查询用户通过id")
     public String userSelect(@RequestBody UserSelectBo userSelectBo){
@@ -58,7 +75,12 @@ public class UserController {
         return JSONArray.toJSONString(userService.userSelect(userSelectBo));
     }
 
-
+    /**
+     * @author zhuxinyu 2023-11-28
+     *      根据用户id修改
+     * @param userUpdateBo
+     * @return
+     */
     @PostMapping("/update")
     @ApiOperation("修改用户通过id")
     public String userUpdate(@RequestBody UserUpdateBo userUpdateBo){
@@ -70,7 +92,12 @@ public class UserController {
         return JSONArray.toJSONString(userService.userUpdate(userUpdateBo));
     }
 
-
+    /**
+     * @author zhuxinyu 2023-11-28
+     *      用户注册
+     * @param user
+     * @return
+     */
     @PostMapping("/userReg")
     @ApiOperation("注册用户")
     public String userReg(@RequestBody User user){

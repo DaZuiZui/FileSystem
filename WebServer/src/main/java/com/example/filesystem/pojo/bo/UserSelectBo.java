@@ -1,12 +1,15 @@
 package com.example.filesystem.pojo.bo;
 
-import com.example.filesystem.pojo.User;
 
 import java.io.Serializable;
 
+/**
+ * 2023-11-28 zhuxinyu
+ * 用户查询实体类
+ */
 public class UserSelectBo implements Serializable {
     private String token;
-    private Long id;
+    private Long id;//用户id
     public UserSelectBo(){
 
     }

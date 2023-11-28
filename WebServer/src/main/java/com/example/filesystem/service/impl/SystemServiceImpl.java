@@ -36,6 +36,13 @@ public class SystemServiceImpl implements SystemService {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * @author zhuxinyu 2023-11-28
+     *      不同权限认证
+     * @param token
+     * @param leave
+     * @return
+     */
     @Override
     public ResponseVo isAdmin(String token, Integer leave) {
         //身份鉴权
@@ -86,7 +93,7 @@ public class SystemServiceImpl implements SystemService {
     }
 
     /**
-     * @author bryan yang 2023 10-12
+     * @author zhuxinyu 2023-11-28
      * 文件下载
      */
     @Override
@@ -106,7 +113,7 @@ public class SystemServiceImpl implements SystemService {
     }
 
     /**
-     * @author bryan yang 2023 10-12
+     * @author zhuxinyu 2023-11-28
      * 非幂等性处理
      * @return
      */
@@ -116,7 +123,7 @@ public class SystemServiceImpl implements SystemService {
     }
 
     /**
-     * @author bryan yang 2023 10-12
+     * @author zhuxinyu 2023-11-28
      * 上传图片
      */
     @Override

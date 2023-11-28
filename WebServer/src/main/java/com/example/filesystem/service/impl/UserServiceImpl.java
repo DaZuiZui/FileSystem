@@ -21,6 +21,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * @author zhuxinyu 2023-11-28
+     *      用户登录验证
+     * @param userAddBo
+     * @return
+     */
     @Override
     public ResponseVo userAdd(UserAddBo userAddBo) {
         User userInDB = userMapper.userAdd(userAddBo);
@@ -43,6 +49,12 @@ public class UserServiceImpl implements UserService {
         return new ResponseVo("登入成功",map,"0x200");
     }
 
+    /**
+     * @author zhuxinyu 2023-11-28
+     *      用户删除
+     * @param userDeleteBo
+     * @return
+     */
     @Override
     public ResponseVo userDelete(UserDeleteBo userDeleteBo) {
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
@@ -62,6 +74,12 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * @author zhuxinyu 2023-11-28
+     *     用户查询
+     * @param userSelectBo
+     * @return
+     */
     @Override
     public ResponseVo userSelect(UserSelectBo userSelectBo) {
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
@@ -81,6 +99,12 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * @author zhuxinyu 2023-11-28
+     *     用户更新
+     * @param userUpdateBo
+     * @return
+     */
     @Override
     public ResponseVo userUpdate(UserUpdateBo userUpdateBo) {
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
@@ -102,6 +126,12 @@ public class UserServiceImpl implements UserService {
         return new ResponseVo("修改成功",user.getId(),"0x200");
     }
 
+    /**
+     * @author zhuxinyu 2023-11-28
+     *     用户注册
+     * @param user
+     * @return
+     */
     @Override
     public ResponseVo userReg(User user) {
         User username = userMapper.findByUsername(user.getUsername());

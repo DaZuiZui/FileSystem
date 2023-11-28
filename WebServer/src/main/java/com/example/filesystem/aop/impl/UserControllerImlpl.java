@@ -17,6 +17,12 @@ public class UserControllerImlpl implements UserControllerAop {
     @Autowired
     private SystemService systemService;
 
+    /**
+     * @author zhuxinyu 2023-11-28
+     *      用户查询权限验证
+     * @param joinPoint
+     * @return
+     */
     @Override
     @Before("execution(* com.example.filesystem.controller.UserController.userSelect(..))")
     public String userSelect(JoinPoint joinPoint) {
@@ -28,6 +34,12 @@ public class UserControllerImlpl implements UserControllerAop {
         return null;
     }
 
+    /**
+     * @author zhuxinyu 2023-11-28
+     *   用户删除权限验证
+     * @param joinPoint
+     * @return
+     */
     @Override
     @Before("execution(* com.example.filesystem.controller.UserController.userDelete(..))")
     public String userDelete(JoinPoint joinPoint) {
@@ -38,6 +50,12 @@ public class UserControllerImlpl implements UserControllerAop {
         return null;
     }
 
+    /**
+     * @author zhuxinyu 2023-11-28
+     *      用户更新权限验证
+     * @param joinPoint
+     * @return
+     */
     @Override
     @Before("execution(* com.example.filesystem.controller.UserController.userUpdate(..))")
     public String userUpdate(JoinPoint joinPoint) {

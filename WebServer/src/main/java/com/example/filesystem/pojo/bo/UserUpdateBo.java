@@ -4,9 +4,13 @@ import com.example.filesystem.pojo.User;
 
 import java.io.Serializable;
 
+/**
+ * 2023-11-28 zhuxinyu
+ * 用户修改实体类
+ */
 public class UserUpdateBo implements Serializable {
     private String token;
-    private User user;
+    private User user;//用户User
     public UserUpdateBo(){
 
     }

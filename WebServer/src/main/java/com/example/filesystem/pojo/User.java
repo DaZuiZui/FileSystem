@@ -3,20 +3,24 @@ package com.example.filesystem.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 2023-11-28 zhuxinyu
+ * 用户实体类
+ */
 public class User implements Serializable {
     private Long id;
-    private String username;
-    private String password;
-    private String name;
-    private Long grade;
-    private String org;
-    private Integer role;
-    private Long createBy;
-    private Date createTime;
-    private Long updateBy;
-    private Date updateTime;
-    private Integer status;
-    private Integer delFlag;
+    private String username;//用户账号
+    private String password;//用户密码
+    private String name;//用户名
+    private Long grade;//年级
+    private String org;//班级/部门
+    private Integer role;//权限（ 0是公开，1是私有，2是管理人员）
+    private Long createBy;//创建人
+    private Date createTime;//创建时间
+    private Long updateBy;//更新人
+    private Date updateTime;//更新时间
+    private Integer status;//状态
+    private Integer delFlag;//逻辑删除（0：没有删除，1：已删除）
 
     public User(){
 

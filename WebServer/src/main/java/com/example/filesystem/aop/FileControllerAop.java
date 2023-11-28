@@ -14,4 +14,11 @@ public interface FileControllerAop {
      */
     void findOwnFile(JoinPoint joinPoint);
 
+    /**
+     * @author hln 2023-11-28
+     *      删除文件或文件夹
+     * @param joinPoint
+     */
+    void deleteFileOrFolder(JoinPoint joinPoint);
+
 }

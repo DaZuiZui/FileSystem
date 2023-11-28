@@ -2,6 +2,7 @@ package com.example.filesystem.service.impl;
 
 import com.example.filesystem.mapper.FileMapper;
 import com.example.filesystem.pojo.File;
+import com.example.filesystem.pojo.bo.DeleteFileOrFolderBo;
 import com.example.filesystem.pojo.bo.FindOwnFileBo;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.service.FileService;
@@ -27,13 +28,42 @@ public class FileServiceImpl implements FileService {
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
 
-        if(userId == null || userId == 0L){
-            return new ResponseVo("查询失败",null,"0x501");
+        if (userId == null || userId == 0L) {
+            return new ResponseVo("token解析失败",null,"0x501");
         }
 
         File file = fileMapper.findOwnFile(findOwnFileBo);
 
-        return null;
+        if (file == null){
+            return new ResponseVo("查询失败",null,"0x500");
+        }
+
+        return new ResponseVo("查询成功",file,"0x200");
+    }
+
+    /**
+     * @author hln 2023-11-28
+     *      删除文件或文件夹
+     * @param deleteFileOrFolderBo
+     * @return
+     */
+    @Override
+    public ResponseVo deleteFileOrFolder(DeleteFileOrFolderBo deleteFileOrFolderBo) {
+
+        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
+        Long userId = Long.valueOf(userIdOfStr);
+
+        if (userId == null || userId == 0L) {
+            return new ResponseVo("token解析失败",null,"0x501");
+        }
+
+        Long judge = fileMapper.deleteFileOrFolder(deleteFileOrFolderBo);
+
+        if (judge == 0L || judge == null) {
+            return new ResponseVo("删除失败",null,"0x500");
+        }
+
+        return new ResponseVo("删除成功",null,"0x200");
     }
 
 }

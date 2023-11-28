@@ -1,6 +1,7 @@
 package com.example.filesystem.controller;
 
 import com.alibaba.fastjson2.JSONArray;
+import com.example.filesystem.pojo.bo.DeleteFileOrFolderBo;
 import com.example.filesystem.pojo.bo.FindOwnFileBo;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.service.FileService;
@@ -37,6 +38,24 @@ public class FileController {
         }
 
         return JSONArray.toJSONString(fileService.findOwnFile(findOwnFileBo));
+    }
+
+    /**
+     * @author hln 2023-11-28
+     *      删除文件或文件夹
+     * @param deleteFileOrFolderBo
+     * @return
+     */
+    @PostMapping("/deleteFileOrFolder")
+    @ApiOperation("删除文件或文件夹")
+    public String deleteFileOrFolder(@RequestBody DeleteFileOrFolderBo deleteFileOrFolderBo){
+        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
+        ThreadLocalUtil.mapThreadLocal.remove();
+        if(map.get("error") != null){
+            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
+        }
+
+        return JSONArray.toJSONString(fileService.deleteFileOrFolder(deleteFileOrFolderBo));
     }
 
 }

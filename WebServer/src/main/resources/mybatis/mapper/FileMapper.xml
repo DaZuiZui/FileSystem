@@ -4,6 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.filesystem.mapper.FileMapper">
 
+    <!-- 删除文件或文件夹 -->
+    <delete id="deleteFileOrFolder">
+        delete
+        from
+            file
+        where
+            path = #{path}
+    </delete>
+
     <!-- 显示自己的文件 -->
     <select id="findOwnFile" resultType="com.example.filesystem.pojo.File">
         select

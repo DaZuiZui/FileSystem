@@ -30,7 +30,7 @@ public class UserController {
      * @param userAddBo
      * @return
      */
-    @PostMapping("/Login")
+    @PostMapping("/login")
     @ApiOperation("用户登入")
     public String userAdd(@RequestBody UserAddBo userAddBo){
         if (userAddBo == null){

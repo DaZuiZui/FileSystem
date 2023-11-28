@@ -38,6 +38,10 @@ public class UserServiceImpl implements UserService {
 
         String token = JwtUtil.createJWT(userInDB);
         Integer role = userInDB.getRole();
+        String name = userInDB.getName();
+        String username = userInDB.getUsername();
+        String org = userInDB.getOrg();
+        Long grade = userInDB.getGrade();
 
         //登录时权限变为用户角色
         userInDB.setRole(0);
@@ -45,6 +49,10 @@ public class UserServiceImpl implements UserService {
         HashMap<String,Object> map = new HashMap<>();
         map.put("token",token);
         map.put("role",role);
+        map.put("name",name);
+        map.put("username",username);
+        map.put("org",org);
+        map.put("grade",grade);
 
         return new ResponseVo("登入成功",map,"0x200");
     }

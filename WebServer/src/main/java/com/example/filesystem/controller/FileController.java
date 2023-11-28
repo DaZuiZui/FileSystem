@@ -3,7 +3,7 @@ package com.example.filesystem.controller;
 import com.alibaba.fastjson2.JSONArray;
 import com.example.filesystem.pojo.bo.DeleteFileOrFolderBo;
 import com.example.filesystem.pojo.bo.FindOwnFileBo;
-import com.example.filesystem.pojo.bo.SelectUpdateByToFileBo;
+import com.example.filesystem.pojo.bo.InsertFileOrFolderBo;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.service.FileService;
 import com.example.filesystem.util.ThreadLocalUtil;
@@ -34,7 +34,6 @@ public class FileController {
     public String findOwnFile(@RequestBody FindOwnFileBo findOwnFileBo){
         Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
         ThreadLocalUtil.mapThreadLocal.remove();
-
         if(map.get("error") != null){
             return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
         }
@@ -53,7 +52,6 @@ public class FileController {
     public String deleteFileOrFolder(@RequestBody DeleteFileOrFolderBo deleteFileOrFolderBo){
         Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
         ThreadLocalUtil.mapThreadLocal.remove();
-
         if(map.get("error") != null){
             return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
         }
@@ -61,23 +59,16 @@ public class FileController {
         return JSONArray.toJSONString(fileService.deleteFileOrFolder(deleteFileOrFolderBo));
     }
 
-    /**
-     * @author hln 2023-11-28
-     *      查看修改文件的人
-     * @param selectUpdateByToFileBo
-     * @return
-     */
-    @PostMapping("/selectUpdateByToFile")
-    @ApiOperation("查看修改文件的人")
-    public String selectUpdateByToFile(@RequestBody SelectUpdateByToFileBo selectUpdateByToFileBo){
+    @PostMapping("/insertFileOrFolder")
+    @ApiOperation("新建文件夹")
+    public String insertFileOrFolder(@RequestBody InsertFileOrFolderBo insertFileOrFolder){
         Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
         ThreadLocalUtil.mapThreadLocal.remove();
-
         if(map.get("error") != null){
             return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
         }
-
-        return JSONArray.toJSONString(fileService.selectUpdateByToFile(selectUpdateByToFileBo));
+        fileService.insertFileOrFolder(insertFileOrFolder);
+        return JSONArray.toJSONString(fileService.insertFileOrFolder(insertFileOrFolder));
     }
 
     /**

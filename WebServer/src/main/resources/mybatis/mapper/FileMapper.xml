@@ -5,10 +5,20 @@
 <mapper namespace="com.example.filesystem.mapper.FileMapper">
     <insert id="insertFileOrFolder">
         insert into
-            file (serverFilename,path)
+            file (server_filename,path)
         values
             (#{serverFilename},#{path})
     </insert>
+
+    <!-- 重命名文件或文件夹 -->
+    <update id="updateFileOrFolder">
+        update
+            file
+        set
+            server_filename = #{serverFilename}
+        where
+            id = #{id}
+    </update>
 
     <!-- 删除文件或文件夹 -->
     <delete id="deleteFileOrFolder">

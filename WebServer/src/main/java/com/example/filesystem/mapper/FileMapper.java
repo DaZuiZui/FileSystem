@@ -3,7 +3,9 @@ package com.example.filesystem.mapper;
 import com.example.filesystem.pojo.File;
 import com.example.filesystem.pojo.bo.DeleteFileOrFolderBo;
 import com.example.filesystem.pojo.bo.FindOwnFileBo;
-import com.example.filesystem.pojo.bo.InsertFileOrFolderBo;
+import com.example.filesystem.pojo.bo.SelectUpdateByToFileBo;
+import com.example.filesystem.pojo.bo.UpdateFileOrFolderBo;
+import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -25,5 +27,19 @@ public interface FileMapper {
      */
     Long deleteFileOrFolder(DeleteFileOrFolderBo deleteFileOrFolderBo);
 
-    void insertFileOrFolder(InsertFileOrFolderBo insertFileOrFolderBo);
+    /**
+     * @author hln 2023-11-28
+     *      查看修改文件的人
+     * @param selectUpdateByToFileBo
+     * @return
+     */
+    SelectUpdateByToFileVo selectUpdateByToFile(SelectUpdateByToFileBo selectUpdateByToFileBo);
+
+    /**
+     * @param updateFileOrFolderBo
+     * @return
+     * @author hln 2023-11-28
+     * 重命名文件或文件夹
+     */
+    Long updateFileOrFolder(UpdateFileOrFolderBo updateFileOrFolderBo);
 }

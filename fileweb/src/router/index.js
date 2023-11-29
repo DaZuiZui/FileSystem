@@ -1,12 +1,17 @@
+
 import { createRouter, createWebHistory } from 'vue-router'
-import Login from '../views/Login.vue'
-import Reg from '../views/Reg.vue'
-import mainPage from '@/components/mainPage.vue'
+import Login from '../components/login.vue'
+import Register from '../components/register.vue'
+import Home from '@/views/Home.vue'
 const routes = [
   {
     path: '/',
-    name: 'mainPage',
-    component: mainPage
+    name: 'Home',
+    component: Home,
+    // 子
+    // children: [
+    // ]
+    
   },
   //登录面板
   {
@@ -16,18 +21,9 @@ const routes = [
   },
   //注册面板
   {
-    path: '/reg',
-    name: 'Reg',
-    component: Reg
-  },
-
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting34
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/register',
+    name: 'Register',
+    component: Register
   },
   
 ]

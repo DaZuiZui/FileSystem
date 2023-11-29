@@ -28,4 +28,11 @@ public interface FileControllerAop {
      */
     void selectUpdateByToFile(JoinPoint joinPoint);
 
+    /**
+     * @author hln 2023-11-28
+     *      重命名文件或文件夹
+     * @param joinPoint
+     */
+    void updateFileOrFolder(JoinPoint joinPoint);
+
 }

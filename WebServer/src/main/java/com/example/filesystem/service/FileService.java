@@ -1,9 +1,6 @@
 package com.example.filesystem.service;
 
-import com.example.filesystem.pojo.bo.DeleteFileOrFolderBo;
-import com.example.filesystem.pojo.bo.FindOwnFileBo;
-import com.example.filesystem.pojo.bo.SelectUpdateByToFileBo;
-import com.example.filesystem.pojo.bo.UpdateFileOrFolderBo;
+import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 
 public interface FileService {
@@ -39,4 +36,12 @@ public interface FileService {
      * @return
      */
     ResponseVo updateFileOrFolder(UpdateFileOrFolderBo updateFileOrFolderBo);
+
+    /**
+     * @author hln 2023-11-29
+     *      下载文件功能
+     * @param downloadFileBo
+     * @return
+     */
+    ResponseVo downloadFile(DownloadFileBo downloadFileBo);
 }

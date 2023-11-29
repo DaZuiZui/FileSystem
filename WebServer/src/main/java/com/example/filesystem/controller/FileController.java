@@ -1,10 +1,7 @@
 package com.example.filesystem.controller;
 
 import com.alibaba.fastjson2.JSONArray;
-import com.example.filesystem.pojo.bo.DeleteFileOrFolderBo;
-import com.example.filesystem.pojo.bo.FindOwnFileBo;
-import com.example.filesystem.pojo.bo.SelectUpdateByToFileBo;
-import com.example.filesystem.pojo.bo.UpdateFileOrFolderBo;
+import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.service.FileService;
 import com.example.filesystem.util.ThreadLocalUtil;
@@ -87,7 +84,7 @@ public class FileController {
      * @param updateFileOrFolderBo
      * @return
      */
-    @PostMapping("/selectUpdateByToFile")
+    @PostMapping("/updateFileOrFolder")
     @ApiOperation("重命名文件或文件夹")
     public String updateFileOrFolder(@RequestBody UpdateFileOrFolderBo updateFileOrFolderBo){
         Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
@@ -98,6 +95,25 @@ public class FileController {
         }
 
         return JSONArray.toJSONString(fileService.updateFileOrFolder(updateFileOrFolderBo));
+    }
+
+    /**
+     * @author hln 2023-11-29
+     *      下载文件功能
+     * @param downloadFileBo
+     * @return
+     */
+    @PostMapping("/downloadFile")
+    @ApiOperation("下载文件功能")
+    public String downloadFile(@RequestBody DownloadFileBo downloadFileBo){
+        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
+        ThreadLocalUtil.mapThreadLocal.remove();
+
+        if (map.get("error") != null) {
+            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
+        }
+
+        return JSONArray.toJSONString(fileService.downloadFile(downloadFileBo));
     }
 
 }

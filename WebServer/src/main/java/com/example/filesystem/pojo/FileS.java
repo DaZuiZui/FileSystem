@@ -3,7 +3,7 @@ package com.example.filesystem.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class File implements Serializable {
+public class FileS implements Serializable {
 
     private Long id;
     private String serverFilename;//文件的绝对路径
@@ -22,7 +22,7 @@ public class File implements Serializable {
     private Integer status;//状态(0:正常，1：删除)
     private Integer delFlag;//逻辑删除(0:正常，1：删除)
 
-    public File(Long id, String serverFilename, String path, Long size, String fileStatus, Integer role, String category, String downloadRecord, Long shareUserId, String operationRecord, Long createBy, Date createTime, Long updateBy, Date updateTime, Integer status, Integer delFlag) {
+    public FileS(String serverFilename) {
         this.id = id;
         this.serverFilename = serverFilename;
         this.path = path;
@@ -41,7 +41,7 @@ public class File implements Serializable {
         this.delFlag = delFlag;
     }
 
-    public File() {
+    public FileS() {
     }
 
     public Long getId() {

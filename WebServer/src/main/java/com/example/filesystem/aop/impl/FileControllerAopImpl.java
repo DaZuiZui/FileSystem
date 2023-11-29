@@ -57,6 +57,7 @@ public class FileControllerAopImpl implements FileControllerAop {
      * @param joinPoint
      */
     @Override
+    @Before("execution(* com.example.filesystem.controller.FileController.selectUpdateByToFile(..))")
     public void selectUpdateByToFile(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         SelectUpdateByToFileBo arg = (SelectUpdateByToFileBo) args[0];
@@ -70,6 +71,7 @@ public class FileControllerAopImpl implements FileControllerAop {
      * @param joinPoint
      */
     @Override
+    @Before("execution(* com.example.filesystem.controller.FileController.updateFileOrFolder(..))")
     public void updateFileOrFolder(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         UpdateFileOrFolderBo arg = (UpdateFileOrFolderBo) args[0];

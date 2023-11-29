@@ -1,6 +1,6 @@
 package com.example.filesystem.mapper;
 
-import com.example.filesystem.pojo.File;
+import com.example.filesystem.pojo.FileS;
 import com.example.filesystem.pojo.bo.DeleteFileOrFolderBo;
 import com.example.filesystem.pojo.bo.FindOwnFileBo;
 import com.example.filesystem.pojo.bo.SelectUpdateByToFileBo;
@@ -17,13 +17,13 @@ public interface FileMapper {
      * @param findOwnFileBo
      * @return
      */
-    File findOwnFile(FindOwnFileBo findOwnFileBo);
+    FileS findOwnFile(FindOwnFileBo findOwnFileBo);
 
     /**
+     * @author hln 2023-11-28
+     *      删除文件或文件夹
      * @param deleteFileOrFolderBo
      * @return
-     * @author hln 2023-11-28
-     * 删除文件或文件夹
      */
     Long deleteFileOrFolder(DeleteFileOrFolderBo deleteFileOrFolderBo);
 
@@ -36,10 +36,18 @@ public interface FileMapper {
     SelectUpdateByToFileVo selectUpdateByToFile(SelectUpdateByToFileBo selectUpdateByToFileBo);
 
     /**
+     * @author hln 2023-11-28
+     *      重命名文件或文件夹
      * @param updateFileOrFolderBo
      * @return
-     * @author hln 2023-11-28
-     * 重命名文件或文件夹
      */
     Long updateFileOrFolder(UpdateFileOrFolderBo updateFileOrFolderBo);
+
+    /**
+     * @author hln 2023-11-29
+     *      获取file的Path
+     * @param serverFilename
+     * @return
+     */
+    String selectToGetPathFile(String serverFilename);
 }

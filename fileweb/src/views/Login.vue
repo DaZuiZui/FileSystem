@@ -46,9 +46,8 @@ import {ref} from "vue"
 
 
 .box {
-    margin: auto;
-    flex-direction: column;
-            
+    margin:10% auto;
+    flex-direction: column;       
     border-radius: 20px;
     display: flex;
     flex-direction: column;

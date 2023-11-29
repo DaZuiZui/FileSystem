@@ -62,7 +62,7 @@
 
             <div>
                 <button @click="submit">登录</button>
-                <button>注册</button>
+                <button @click="submit">注册</button>
             </div>
         </div>
     </div>
@@ -244,13 +244,15 @@ async function submit() {
     }
 
     console.log(user);
-    // const obj = await synRequestPost('/user/userReg', user);
+     const obj = await synRequestPost('/user/userReg', user);
 
-    // if (obj.code === '0x200') {
+     if (obj.code === '0x200') {
         $router.push('/login');
-    // }
+     }
 
     switchbutton.value = false;
+
+
 }
 
 
@@ -294,7 +296,7 @@ async function submit() {
 }
 
 .box {
-    margin: 6% auto;
+    margin: 10% auto;
     flex-direction: column;
     border-radius: 20px;
     display: flex;

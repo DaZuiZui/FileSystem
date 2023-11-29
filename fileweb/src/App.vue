@@ -10,6 +10,7 @@
 </template>
 
 <style lang="less">
+
 .ball {
   position: absolute;
   background: rgba(255, 255, 255, 10);

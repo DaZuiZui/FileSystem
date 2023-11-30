@@ -1,6 +1,6 @@
 package com.example.filesystem.mapper;
 
-import com.example.filesystem.pojo.FileS;
+import com.example.filesystem.pojo.File;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
 import org.apache.ibatis.annotations.Mapper;

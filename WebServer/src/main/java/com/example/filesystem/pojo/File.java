@@ -3,18 +3,15 @@ package com.example.filesystem.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class FileS implements Serializable {
+public class File implements Serializable {
 
     private Long id;
-    private String serverFilename;//文件的绝对路径
+    private String serverFileName;//文件的绝对路径
     private String path;//路径（"/" + 文件名）
     private Long size;//文件大小 单位（B）
-    private String fileStatus;//状态（0:私有，1:指定人员访问，2:公开）
+    private Integer fileStatus;//状态（0:私有，1:指定人员访问，2:公开）
     private Integer role;//权限（0：普通用户，1：老师，2：管理员）
     private String category;//文件类型
-    private String downloadRecord;//下载记录
-    private Long shareUserId;//共享成员ID
-    private String operationRecord;// 操作记录
     private Long createBy;//创建人
     private Date createTime;//创建时间
     private Long updateBy;//修改人
@@ -22,17 +19,17 @@ public class FileS implements Serializable {
     private Integer status;//状态(0:正常，1：删除)
     private Integer delFlag;//逻辑删除(0:正常，1：删除)
 
-    public FileS(String serverFilename) {
-        this.id = id;
-        this.serverFilename = serverFilename;
+
+    public File() {
+    }
+
+    public File(String serverFileName, String path, Long size, Integer fileStatus, Integer role, String category, Long createBy, Date createTime, Long updateBy, Date updateTime, Integer status, Integer delFlag) {
+        this.serverFileName = serverFileName;
         this.path = path;
         this.size = size;
         this.fileStatus = fileStatus;
         this.role = role;
         this.category = category;
-        this.downloadRecord = downloadRecord;
-        this.shareUserId = shareUserId;
-        this.operationRecord = operationRecord;
         this.createBy = createBy;
         this.createTime = createTime;
         this.updateBy = updateBy;
@@ -41,7 +38,20 @@ public class FileS implements Serializable {
         this.delFlag = delFlag;
     }
 
-    public FileS() {
+    public File(Long id, String serverFileName, String path, Long size, Integer fileStatus, Integer role, String category, Long createBy, Date createTime, Long updateBy, Date updateTime, Integer status, Integer delFlag) {
+        this.id = id;
+        this.serverFileName = serverFileName;
+        this.path = path;
+        this.size = size;
+        this.fileStatus = fileStatus;
+        this.role = role;
+        this.category = category;
+        this.createBy = createBy;
+        this.createTime = createTime;
+        this.updateBy = updateBy;
+        this.updateTime = updateTime;
+        this.status = status;
+        this.delFlag = delFlag;
     }
 
     public Long getId() {
@@ -52,12 +62,12 @@ public class FileS implements Serializable {
         this.id = id;
     }
 
-    public String getServerFilename() {
-        return serverFilename;
+    public String getServerFileName() {
+        return serverFileName;
     }
 
-    public void setServerFilename(String serverFilename) {
-        this.serverFilename = serverFilename;
+    public void setServerFileName(String serverFileName) {
+        this.serverFileName = serverFileName;
     }
 
     public String getPath() {
@@ -76,11 +86,11 @@ public class FileS implements Serializable {
         this.size = size;
     }
 
-    public String getFileStatus() {
+    public Integer getFileStatus() {
         return fileStatus;
     }
 
-    public void setFileStatus(String fileStatus) {
+    public void setFileStatus(Integer fileStatus) {
         this.fileStatus = fileStatus;
     }
 
@@ -98,30 +108,6 @@ public class FileS implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getDownloadRecord() {
-        return downloadRecord;
-    }
-
-    public void setDownloadRecord(String downloadRecord) {
-        this.downloadRecord = downloadRecord;
-    }
-
-    public Long getShareUserId() {
-        return shareUserId;
-    }
-
-    public void setShareUserId(Long shareUserId) {
-        this.shareUserId = shareUserId;
-    }
-
-    public String getOperationRecord() {
-        return operationRecord;
-    }
-
-    public void setOperationRecord(String operationRecord) {
-        this.operationRecord = operationRecord;
     }
 
     public Long getCreateBy() {
@@ -176,15 +162,12 @@ public class FileS implements Serializable {
     public String toString() {
         return "File{" +
                 "id=" + id +
-                ", serverFilename='" + serverFilename + '\'' +
+                ", serverFileName='" + serverFileName + '\'' +
                 ", path='" + path + '\'' +
                 ", size=" + size +
-                ", fileStatus='" + fileStatus + '\'' +
+                ", fileStatus=" + fileStatus +
                 ", role=" + role +
                 ", category='" + category + '\'' +
-                ", downloadRecord='" + downloadRecord + '\'' +
-                ", shareUserId=" + shareUserId +
-                ", operationRecord='" + operationRecord + '\'' +
                 ", createBy=" + createBy +
                 ", createTime=" + createTime +
                 ", updateBy=" + updateBy +

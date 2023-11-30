@@ -40,5 +40,4 @@ public interface SystemService {
     public byte[] getPhoto(@RequestParam("imgUrl") String imgUrl) throws IOException;
 
 
-    public String imgUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException;
 }

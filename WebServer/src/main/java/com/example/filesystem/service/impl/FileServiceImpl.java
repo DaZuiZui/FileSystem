@@ -1,21 +1,33 @@
 package com.example.filesystem.service.impl;
 
+import com.alibaba.fastjson2.JSONArray;
 import com.example.filesystem.mapper.FileMapper;
-import com.example.filesystem.pojo.FileS;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
 import com.example.filesystem.service.FileService;
 import com.example.filesystem.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Date;
+import java.util.Map;
+import java.util.UUID;
+
+import static com.example.filesystem.util.JwtUtil.analysis;
 
 @Service
 public class FileServiceImpl implements FileService {
 
+    @Value("${filePath}")
+    private String path;
+    @Value("${projecturl}")
+    private String projecturl;
     @Autowired
     private FileMapper fileMapper;
 
@@ -35,7 +47,7 @@ public class FileServiceImpl implements FileService {
             return new ResponseVo("token解析失败",null,"0x501");
         }
 
-        FileS file = fileMapper.findOwnFile(findOwnFileBo);
+        com.example.filesystem.pojo.File file = fileMapper.findOwnFile(findOwnFileBo);
 
         if (file == null){
             return new ResponseVo("查询失败",null,"0x500");
@@ -189,5 +201,52 @@ public class FileServiceImpl implements FileService {
         return new ResponseVo("添加成功",null,"0x200");
 
     }
+
+
+    /**
+     * @author Oh...Yeah!!! 2023-11-13
+     *    文件上传
+     * @param token
+     * @param file
+     * @return String.class
+     */
+    @Override
+    public String imgUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException{
+        //获取文件名
+        String fileName = file.getOriginalFilename();
+        //获取文件后缀名。也可以在这里添加判断语句，规定特定格式的文件才能上传，否则拒绝保存。
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));
+        //为了避免发生文件替换，这里使用了文件名重新生成
+        fileName = UUID.randomUUID()+suffixName;
+
+        //获取username
+        Map<String, Object> analysis = analysis(token);
+        String id = (String) analysis.get("id");
+
+        File saveFilePath = new File(path+""+id+"/");
+        //判断是否存在文件夹，不存在就创建，但其实可以直接手动确定创建好，这样不用每次保存都检测
+        if (!saveFilePath.exists()){
+            saveFilePath.mkdirs();
+        }
+
+        String imgUrl = id+"/"+fileName;
+
+        file.transferTo(new File(path+imgUrl));
+
+        long userId = Long.parseLong(id);
+
+        com.example.filesystem.pojo.File newFile = new com.example.filesystem.pojo.File(
+                path+""+id+"/"+ fileName,"/" + fileName,
+                file.getSize(),0,0,
+                suffixName,userId,new Date(),
+                userId,new Date(),0,0
+        );
+
+        fileMapper.addFile(newFile);
+
+
+        return JSONArray.toJSONString(new ResponseVo<>("success",projecturl+"/system/getfile?fileUrl="+id+"/"+fileName,"0x200"));
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.filesystem.mapper;
 
-import com.example.filesystem.pojo.FileS;
+
+import com.example.filesystem.pojo.File;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,7 +15,7 @@ public interface FileMapper {
      * @param findOwnFileBo
      * @return
      */
-    FileS findOwnFile(FindOwnFileBo findOwnFileBo);
+    File findOwnFile(FindOwnFileBo findOwnFileBo);
 
     /**
      * @author hln 2023-11-28
@@ -55,4 +56,12 @@ public interface FileMapper {
      * @return
      */
     Long insertFolder(InsertFolderBo insertFolderBo);
+
+    /**
+     * @Auther Oh… Yeah!!! 2023-11-30
+     *      上传文件
+     * @param newFile
+     * @return
+     */
+    public void addFile(File newFile);
 }

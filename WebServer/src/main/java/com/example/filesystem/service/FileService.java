@@ -2,8 +2,11 @@ package com.example.filesystem.service;
 
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public interface FileService {
 
@@ -46,6 +49,16 @@ public interface FileService {
      * @return
      */
     ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response);
+
+    /**
+     * @author Oh...Yeah!!! 2023-11-13
+     *    文件上传
+     * @param token
+     * @param file
+     * @return String.class
+     */
+    public String imgUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException;
+
 
     /**
      * @author zzy 2023-11-30

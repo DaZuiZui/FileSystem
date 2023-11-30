@@ -9,8 +9,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 @CrossOrigin
@@ -21,6 +23,22 @@ public class FileController {
 
     @Autowired
     private FileService fileService;
+
+
+    /**
+     * @author Oh...Yeah!!! 2023-11-13
+     *    文件上传
+     * @param token
+     * @param file
+     * @return String.class
+     */
+    @ApiOperation("文件上传")
+    @RequestMapping(value = "imgUpDown",method = {RequestMethod.POST})
+    public String imgUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException {
+        return fileService.imgUpDown(file,token);
+    }
+
+
 
     /**
      * @author hln 2023-11-28

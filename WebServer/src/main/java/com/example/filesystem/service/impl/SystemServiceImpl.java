@@ -122,31 +122,5 @@ public class SystemServiceImpl implements SystemService {
         return "";
     }
 
-    /**
-     * @author zhuxinyu 2023-11-28
-     * 上传图片
-     */
-    @Override
-    public String imgUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException{
-        //获取文件名
-        String fileName = file.getOriginalFilename();
-        //获取文件后缀名。也可以在这里添加判断语句，规定特定格式的图片才能上传，否则拒绝保存。
-        String suffixName = fileName.substring(fileName.lastIndexOf("."));
-        //为了避免发生图片替换，这里使用了文件名重新生成
-        fileName = UUID.randomUUID()+suffixName;
 
-        //获取username
-        Map<String, Object> analysis = JwtUtil.analysis(token);
-        String id = (String) analysis.get("id");
-
-        File saveFilePath = new File(path+""+id+"/");
-        //判断是否存在文件夹，不存在就创建，但其实可以直接手动确定创建好，这样不用每次保存都检测
-        if (!saveFilePath.exists()){
-            saveFilePath.mkdirs();
-        }
-
-        file.transferTo(new File(path+""+id+"/"+fileName));
-        System.err.println("??");
-        return JSONArray.toJSONString(new ResponseVo<>("success",projecturl+"/system/getimage?imgUrl="+id+"/"+fileName,"0x200"));
-    }
 }

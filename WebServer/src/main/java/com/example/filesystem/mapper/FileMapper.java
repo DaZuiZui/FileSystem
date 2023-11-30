@@ -3,6 +3,7 @@ package com.example.filesystem.mapper;
 import com.example.filesystem.pojo.File;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
+import com.example.filesystem.pojo.vo.UpdateFileOrFolderVo;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -33,12 +34,13 @@ public interface FileMapper {
     SelectUpdateByToFileVo selectUpdateByToFile(SelectUpdateByToFileBo selectUpdateByToFileBo);
 
     /**
-     * @author hln 2023-11-28
-     *      重命名文件或文件夹
      * @param updateFileOrFolderBo
+     * @param lastName
      * @return
+     * @author hln 2023-11-28
+     * 重命名文件或文件夹
      */
-    Long updateFileOrFolder(UpdateFileOrFolderBo updateFileOrFolderBo);
+//    Long updateFileOrFolder(UpdateFileOrFolderBo updateFileOrFolderBo, String lastName);
 
     /**
      * @author hln 2023-11-29
@@ -71,4 +73,12 @@ public interface FileMapper {
      * @return
      */
     Long moveFileOrFolder(MoveFileOrFolderBo moveFileOrFolderBo);
+
+    /**
+     * @author hln 2023-11-28
+     *      重命名文件或文件夹
+     * @param updateFileOrFolderVo
+     * @return
+     */
+    Long updateFileOrFolder(UpdateFileOrFolderVo updateFileOrFolderVo);
 }

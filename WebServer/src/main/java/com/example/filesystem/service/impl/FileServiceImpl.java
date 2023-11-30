@@ -5,6 +5,7 @@ import com.example.filesystem.mapper.FileMapper;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
+import com.example.filesystem.pojo.vo.UpdateFileOrFolderVo;
 import com.example.filesystem.service.FileService;
 import com.example.filesystem.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,12 +123,15 @@ public class FileServiceImpl implements FileService {
             return new ResponseVo("token解析失败",null,"0x501");
         }
 
+        UpdateFileOrFolderVo updateFileOrFolderVo = new UpdateFileOrFolderVo();
+
         String name = updateFileOrFolderBo.getServerFilename();
         String updateAfterName = name.substring(0,name.lastIndexOf("/") + 1) + updateFileOrFolderBo.getUpdateName();
 
-        updateFileOrFolderBo.setServerFilename(updateAfterName);
+        updateFileOrFolderVo.setServerFilename(updateFileOrFolderBo.getServerFilename());
+        updateFileOrFolderVo.setLastName(updateAfterName);
 
-        Long judge = fileMapper.updateFileOrFolder(updateFileOrFolderBo);
+        Long judge = fileMapper.updateFileOrFolder(updateFileOrFolderVo);
 
         if (judge == 0L || judge == null) {
             return new ResponseVo("修改失败",null,"0x500");

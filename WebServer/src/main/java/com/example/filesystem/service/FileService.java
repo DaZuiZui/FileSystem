@@ -67,4 +67,12 @@ public interface FileService {
      * @return
      */
     ResponseVo insertFolder(InsertFolderBo insertFolderBo);
+
+    /**
+     * @author zzy 2023-11-30
+     *      移动文件或文件夹
+     * @param moveFileOrFolderBo
+     * @return
+     */
+    ResponseVo moveFileOrFolder(MoveFileOrFolderBo moveFileOrFolderBo);
 }

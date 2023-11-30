@@ -1,7 +1,6 @@
 package com.example.filesystem.mapper;
 
-
-import com.example.filesystem.pojo.File;
+import com.example.filesystem.pojo.FileS;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -64,4 +63,12 @@ public interface FileMapper {
      * @return
      */
     public void addFile(File newFile);
+
+    /**
+     * @author zzy 2023-11-30
+     *      移动文件或文件夹
+     * @param moveFileOrFolderBo
+     * @return
+     */
+    Long moveFileOrFolder(MoveFileOrFolderBo moveFileOrFolderBo);
 }

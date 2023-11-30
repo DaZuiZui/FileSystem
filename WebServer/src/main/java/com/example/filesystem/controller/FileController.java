@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @CrossOrigin
@@ -105,7 +106,7 @@ public class FileController {
      */
     @PostMapping("/downloadFile")
     @ApiOperation("下载文件功能")
-    public String downloadFile(@RequestBody DownloadFileBo downloadFileBo){
+    public String downloadFile(@RequestBody DownloadFileBo downloadFileBo, HttpServletResponse response){
         Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
         ThreadLocalUtil.mapThreadLocal.remove();
 
@@ -113,7 +114,7 @@ public class FileController {
             return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
         }
 
-        return JSONArray.toJSONString(fileService.downloadFile(downloadFileBo));
+        return JSONArray.toJSONString(fileService.downloadFile(downloadFileBo,response));
     }
 
 }

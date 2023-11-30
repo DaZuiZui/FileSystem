@@ -3,6 +3,8 @@ package com.example.filesystem.service;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 
+import javax.servlet.http.HttpServletResponse;
+
 public interface FileService {
 
     /**
@@ -43,5 +45,5 @@ public interface FileService {
      * @param downloadFileBo
      * @return
      */
-    ResponseVo downloadFile(DownloadFileBo downloadFileBo);
+    ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response);
 }

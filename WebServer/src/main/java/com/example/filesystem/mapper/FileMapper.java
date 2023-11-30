@@ -55,4 +55,12 @@ public interface FileMapper {
      * @return
      */
     Long insertFolder(InsertFolderBo insertFolderBo);
+
+    /**
+     * @author zzy 2023-11-30
+     *      移动文件或文件夹
+     * @param moveFileOrFolderBo
+     * @return
+     */
+    Long moveFileOrFolder(MoveFileOrFolderBo moveFileOrFolderBo);
 }

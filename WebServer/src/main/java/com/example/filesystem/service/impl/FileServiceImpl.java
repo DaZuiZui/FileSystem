@@ -189,5 +189,28 @@ public class FileServiceImpl implements FileService {
         return new ResponseVo("添加成功",null,"0x200");
 
     }
+    /**
+     * @author zzy 2023-11-30
+     *      移动文件或文件夹
+     * @param moveFileOrFolderBo
+     * @return
+     */
+
+    @Override
+    public ResponseVo moveFileOrFolder(MoveFileOrFolderBo moveFileOrFolderBo) {
+        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
+        Long userId = Long.valueOf(userIdOfStr);
+
+        if (userId == null || userId == 0L) {
+            return new ResponseVo("token解析失败", null, "0x501");
+        }
+        Long judge = fileMapper.moveFileOrFolder(moveFileOrFolderBo);
+        if (judge == 0L || judge == null) {
+            return new ResponseVo("移动失败",null,"0x500");
+        }
+
+        return new ResponseVo("移动成功",null,"0x200");
+
+    }
 
 }

@@ -135,4 +135,21 @@ public class FileController {
 
     }
 
+    /**
+     * @author zzy 2023-11-30
+     *      移动文件或文件夹
+     * @param moveFileOrFolderBo
+     * @return
+     */
+    @PostMapping("/moveFileOrFolder")
+    @ApiOperation("移动文件或文件夹")
+    public String moveFileOrFolder(@RequestBody MoveFileOrFolderBo moveFileOrFolderBo){
+        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
+        ThreadLocalUtil.mapThreadLocal.remove();
+        if(map.get("error") != null){
+            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
+        }
+        return JSONArray.toJSONString(fileService.moveFileOrFolder(moveFileOrFolderBo));
+    }
+
 }

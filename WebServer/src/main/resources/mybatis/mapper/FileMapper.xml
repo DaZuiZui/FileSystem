@@ -21,6 +21,18 @@
             id = #{id}
     </update>
 
+    <!-- 移动文件或文件夹 -->
+    <update id="moveFileOrFolder">
+        update
+            file
+        set
+            server_filename = #{serverFilename} ,
+            path = #{path}
+        where
+            id = #{id}
+
+    </update>
+
     <!-- 删除文件或文件夹 -->
     <delete id="deleteFileOrFolder">
         delete

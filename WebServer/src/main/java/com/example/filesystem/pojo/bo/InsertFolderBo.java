@@ -3,20 +3,20 @@ package com.example.filesystem.pojo.bo;
 import java.io.Serializable;
 
 /**
- * @author hln 2023-11-28
+ * @author zzy 2023-11-28
  *      新建文件夹
  */
-public class InsertFileOrFolderBo implements Serializable {
+public class InsertFolderBo implements Serializable {
 
     private String token;
     private String serverFilename;//文件的绝对路径
     private String path;//
 
-    public InsertFileOrFolderBo(){
+    public InsertFolderBo(){
 
     }
 
-    public InsertFileOrFolderBo(String token, String serverFilename, String path) {
+    public InsertFolderBo(String token, String serverFilename, String path) {
         this.token = token;
         this.serverFilename = serverFilename;
         this.path = path;

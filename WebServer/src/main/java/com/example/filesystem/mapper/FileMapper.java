@@ -1,10 +1,7 @@
 package com.example.filesystem.mapper;
 
 import com.example.filesystem.pojo.FileS;
-import com.example.filesystem.pojo.bo.DeleteFileOrFolderBo;
-import com.example.filesystem.pojo.bo.FindOwnFileBo;
-import com.example.filesystem.pojo.bo.SelectUpdateByToFileBo;
-import com.example.filesystem.pojo.bo.UpdateFileOrFolderBo;
+import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -50,4 +47,12 @@ public interface FileMapper {
      * @return
      */
     String selectToGetPathFile(String serverFilename);
+
+    /**
+     * @author zzy 2023-11-30
+     *      新建文件夹
+     * @param insertFolderBo
+     * @return
+     */
+    Long insertFolder(InsertFolderBo insertFolderBo);
 }

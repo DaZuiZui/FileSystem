@@ -46,4 +46,12 @@ public interface FileService {
      * @return
      */
     ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response);
+
+    /**
+     * @author zzy 2023-11-30
+     *      新建文件夹
+     * @param insertFolderBo
+     * @return
+     */
+    ResponseVo insertFolder(InsertFolderBo insertFolderBo);
 }

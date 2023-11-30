@@ -117,4 +117,22 @@ public class FileController {
         return JSONArray.toJSONString(fileService.downloadFile(downloadFileBo,response));
     }
 
+    /**
+     * @author zzy 2023-11-30
+     *      新建文件夹
+     * @param insertFolderBo
+     * @return
+     */
+    @PostMapping("/insertFolder")
+    @ApiOperation("新建文件夹")
+    public String insertFolder(@RequestBody InsertFolderBo insertFolderBo){
+        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
+        ThreadLocalUtil.mapThreadLocal.remove();
+        if(map.get("error") != null){
+            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
+        }
+        return JSONArray.toJSONString(fileService.insertFolder(insertFolderBo));
+
+    }
+
 }

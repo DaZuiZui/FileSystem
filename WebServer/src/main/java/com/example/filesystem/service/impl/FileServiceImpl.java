@@ -166,4 +166,28 @@ public class FileServiceImpl implements FileService {
         return new ResponseVo("文件下载成功",null,"0x200");
     }
 
+    /**
+     * @author zzy 2023-11-30
+     *      新建文件夹
+     * @param insertFolderBo
+     * @return
+     */
+    @Override
+    public ResponseVo insertFolder(InsertFolderBo insertFolderBo) {
+        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
+        Long userId = Long.valueOf(userIdOfStr);
+
+        if (userId == null || userId == 0L) {
+            return new ResponseVo("token解析失败", null, "0x501");
+        }
+
+        Long file = fileMapper.insertFolder(insertFolderBo);
+        if (file == 0L || file == null) {
+            return new ResponseVo("添加失败",null,"0x500");
+        }
+
+        return new ResponseVo("添加成功",null,"0x200");
+
+    }
+
 }

@@ -3,36 +3,41 @@
         <h2>Login</h2>
         <div class="input-box">
             <label>账号</label>
-            <input type="text"/>
+            <input type="text" v-model="user.username"/>
         </div>
         <div class="input-box">
             <label>密码</label>
-            <input type="password"/>
+            <input type="password" v-model="user.password"/>
         </div>
         <div class="btn-box">
             <div>
-                <button>登录</button>
-                <button>注册</button>
+                <button @click="submitForm">登录</button>
+                <el-button type="primary" round>注册</el-button>
             </div>
         </div>
     </div>
 </template> 
 
 <script setup>
-import {ref} from "vue"
-      const username= ref("")
-      const password= ref("")
-    
-   function submitForm() {
+
+import {ref,reactive} from "vue"
+import {login} from '@/api'
+
+const user=reactive({
+        username:'',
+        password:''
+      })
+      async function submitForm() {
       // 处理表单提交逻辑
-      console.log('Username:', this.username);
-      console.log('Password:', this.password);
+
+      let result = await login(user.username , user.password);
+      console.log(result);
       // 可以在这里添加表单提交的逻辑
     }
   
 </script>
 
-<style scoped lang="less">
+<style>
 
 .Login {
   /* 实现水平垂直居中 */
@@ -46,9 +51,8 @@ import {ref} from "vue"
 
 
 .box {
-    margin: auto;
-    flex-direction: column;
-            
+    margin:10% auto;
+    flex-direction: column;       
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -73,7 +77,7 @@ import {ref} from "vue"
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: start;
     margin-bottom: 10px;
 }
 
@@ -107,7 +111,7 @@ import {ref} from "vue"
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: start;
 }
 
 .box .btn-box > a {
@@ -127,7 +131,7 @@ import {ref} from "vue"
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: flex-start;
+    align-items: start;
     margin-top: 20px;
 }
 

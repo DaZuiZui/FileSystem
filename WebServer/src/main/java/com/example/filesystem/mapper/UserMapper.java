@@ -2,6 +2,7 @@ package com.example.filesystem.mapper;
 
 import com.example.filesystem.pojo.User;
 import com.example.filesystem.pojo.bo.UserAddBo;
+import com.example.filesystem.pojo.bo.UserRegBo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -60,8 +61,8 @@ public interface UserMapper {
     /**
      * @author zhuxinyu 2023-11-28
      *      用户注册
-     * @param user
+     * @param userRegBo
      * @return
      */
-    Long userReg(User user);
+    Long userReg(UserRegBo userRegBo);
 }

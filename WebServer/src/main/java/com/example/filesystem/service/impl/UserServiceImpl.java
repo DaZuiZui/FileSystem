@@ -2,10 +2,7 @@ package com.example.filesystem.service.impl;
 
 import com.example.filesystem.mapper.UserMapper;
 import com.example.filesystem.pojo.User;
-import com.example.filesystem.pojo.bo.UserAddBo;
-import com.example.filesystem.pojo.bo.UserDeleteBo;
-import com.example.filesystem.pojo.bo.UserSelectBo;
-import com.example.filesystem.pojo.bo.UserUpdateBo;
+import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.service.UserService;
 import com.example.filesystem.util.JwtUtil;
@@ -137,22 +134,18 @@ public class UserServiceImpl implements UserService {
     /**
      * @author zhuxinyu 2023-11-28
      *     用户注册
-     * @param user
+     * @param userRegBo
      * @return
      */
     @Override
-    public ResponseVo userReg(User user) {
-        User username = userMapper.findByUsername(user.getUsername());
+    public ResponseVo userReg(UserRegBo userRegBo) {
+        User username = userMapper.findByUsername(userRegBo.getUsername());
 
         if(username != null){
             return new ResponseVo("该username已经存在",null,"0x202");
         }
 
-        user.setCreateTime(new Date());
-
-        user.setStatus(0);
-        user.setDelFlag(0);
-        Long aLong = userMapper.userReg(user);
+        Long aLong = userMapper.userReg(userRegBo);
 
         if(aLong.longValue() == 0L){
             return new ResponseVo("注册失败",null,"0x500");

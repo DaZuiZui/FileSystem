@@ -1,10 +1,7 @@
 package com.example.filesystem.service;
 
 import com.example.filesystem.pojo.User;
-import com.example.filesystem.pojo.bo.UserAddBo;
-import com.example.filesystem.pojo.bo.UserDeleteBo;
-import com.example.filesystem.pojo.bo.UserSelectBo;
-import com.example.filesystem.pojo.bo.UserUpdateBo;
+import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 
 
@@ -45,8 +42,8 @@ public interface UserService {
     /**
      * @author zhuxinyu 2023-11-28
      *     用户注册
-     * @param user
+     * @param userRegBo
      * @return
      */
-    ResponseVo userReg(User user);
+    ResponseVo userReg(UserRegBo userRegBo);
 }

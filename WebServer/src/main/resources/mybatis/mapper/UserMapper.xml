@@ -8,9 +8,9 @@
     <insert id="userReg" parameterType="com.example.filesystem.pojo.User">
         insert into
             user
-        (username,password,name,grade,org,role,create_by,create_time,update_by,update_time,status,del_flag)
+        (username,password,name,grade,org)
         values
-            (#{username},#{password},#{name},#{grade},#{org},#{role},#{createBy},#{createTime},#{updateBy},#{updateTime},#{status},#{delFlag})
+            (#{username},#{password},#{name},#{grade},#{org})
     </insert>
 
 

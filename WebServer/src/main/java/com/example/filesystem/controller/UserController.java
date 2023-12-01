@@ -2,10 +2,7 @@ package com.example.filesystem.controller;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.example.filesystem.pojo.User;
-import com.example.filesystem.pojo.bo.UserAddBo;
-import com.example.filesystem.pojo.bo.UserDeleteBo;
-import com.example.filesystem.pojo.bo.UserSelectBo;
-import com.example.filesystem.pojo.bo.UserUpdateBo;
+import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.service.UserService;
 import com.example.filesystem.util.ThreadLocalUtil;
@@ -95,16 +92,16 @@ public class UserController {
     /**
      * @author zhuxinyu 2023-11-28
      *      用户注册
-     * @param user
+     * @param userRegBo
      * @return
      */
     @PostMapping("/userReg")
     @ApiOperation("注册用户")
-    public String userReg(@RequestBody User user){
-        if (user == null){
+    public String userReg(@RequestBody UserRegBo userRegBo){
+        if (userRegBo == null){
             JSONArray.toJSONString( new ResponseVo("参数为null", null, "0x455"));
         }
-        return JSONArray.toJSONString(userService.userReg(user));
+        return JSONArray.toJSONString(userService.userReg(userRegBo));
     }
 
 

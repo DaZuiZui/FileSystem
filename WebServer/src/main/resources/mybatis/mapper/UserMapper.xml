@@ -8,9 +8,9 @@
     <insert id="userReg" parameterType="com.example.filesystem.pojo.User">
         insert into
             user
-        (username,password,name,grade,org,role,create_by,create_time,update_by,update_time,status,del_flag)
+        (username,password,name,grade,org)
         values
-            (#{username},#{password},#{name},#{grade},#{org},#{role},#{createBy},#{createTime},#{updateBy},#{updateTime},#{status},#{delFlag})
+            (#{username},#{password},#{name},#{grade},#{org})
     </insert>
 
 
@@ -84,11 +84,19 @@
     <!-- 根据id查找用户 -->
     <select id="userSelect" resultType="com.example.filesystem.pojo.User" parameterType="java.lang.Long">
         select
-            t1.username,t1.name,t1.grade,t1.org,t1.role,t1.create_time
+            t1.username,t1.name,t1.grade,t1.org,t1.role
         from
             user t1
         where
             id=#{id}
             limit 1
+    </select>
+    <!--查询所有用户的基础信息-->
+    <select id="userFindAll" resultType="com.example.filesystem.pojo.vo.UserFindAllVo">
+        select
+            t1.username,t1.name,t1.grade,t1.org
+        from
+            user t1
+        limit 0,15
     </select>
 </mapper>

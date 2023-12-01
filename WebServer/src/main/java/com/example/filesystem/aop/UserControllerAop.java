@@ -28,4 +28,12 @@ public interface UserControllerAop {
      * @return
      */
     public String userUpdate(JoinPoint joinPoint);
+
+    /**
+     * @author zhuxinyu 2023-12-01
+     *      返回所有用户的基础信息验证
+     * @param joinPoint
+     * @return
+     */
+    public String userFindAll(JoinPoint joinPoint);
 }

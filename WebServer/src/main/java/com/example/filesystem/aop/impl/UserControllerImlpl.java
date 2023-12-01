@@ -4,6 +4,7 @@ import com.example.filesystem.aop.UserControllerAop;
 import com.example.filesystem.pojo.bo.UserDeleteBo;
 import com.example.filesystem.pojo.bo.UserSelectBo;
 import com.example.filesystem.pojo.bo.UserUpdateBo;
+import com.example.filesystem.pojo.vo.UserFindAllVo;
 import com.example.filesystem.service.SystemService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -65,4 +66,20 @@ public class UserControllerImlpl implements UserControllerAop {
         systemService.isAdmin(token , 0);
         return null;
     }
+
+    /**
+     * @author zhuxinyu 2023-12-01
+     *      返回所有用户的基础信息验证
+     * @param joinPoint
+     * @return
+     */
+    @Override
+    @Before("execution(* com.example.filesystem.controller.UserController.userFindAll(..))")
+    public String userFindAll(JoinPoint joinPoint) {
+        Object[] args = joinPoint.getArgs();
+        String token = (String) args[0];
+        systemService.isAdmin(token , 1);
+        return null;
+    }
+
 }

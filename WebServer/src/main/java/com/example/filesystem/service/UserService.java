@@ -46,4 +46,11 @@ public interface UserService {
      * @return
      */
     ResponseVo userReg(UserRegBo userRegBo);
+
+    /**
+     * @author zhuxinyu 2023-12-01
+     *      返回所有用户的基础信息
+     * @return
+     */
+    ResponseVo userFindAll();
 }

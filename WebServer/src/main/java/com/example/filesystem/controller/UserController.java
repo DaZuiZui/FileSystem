@@ -104,7 +104,22 @@ public class UserController {
         return JSONArray.toJSONString(userService.userReg(userRegBo));
     }
 
-
+    /**
+     * @author zhuxinyu 2023-12-01
+     *      返回所有用户的基础信息
+     * @param token
+     * @return
+     */
+    @PostMapping("/userFindAll")
+    @ApiOperation("返回所有用户的基础信息")
+    public String userFindAll(@RequestParam String token){
+        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
+        ThreadLocalUtil.mapThreadLocal.remove();
+        if ( map.get("error") != null) {
+            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
+        }
+        return JSONArray.toJSONString(userService.userFindAll());
+    }
 
 
 }

@@ -3,9 +3,12 @@ package com.example.filesystem.mapper;
 import com.example.filesystem.pojo.User;
 import com.example.filesystem.pojo.bo.UserAddBo;
 import com.example.filesystem.pojo.bo.UserRegBo;
+import com.example.filesystem.pojo.vo.UserFindAllVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -65,4 +68,11 @@ public interface UserMapper {
      * @return
      */
     Long userReg(UserRegBo userRegBo);
+
+    /**
+     * @author zhuxinyu 2023-12-01
+     *      返回所有用户的基础信息
+     * @return
+     */
+    List<UserFindAllVo> userFindAll();
 }

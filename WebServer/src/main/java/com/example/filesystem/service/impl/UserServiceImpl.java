@@ -4,6 +4,7 @@ import com.example.filesystem.mapper.UserMapper;
 import com.example.filesystem.pojo.User;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
+import com.example.filesystem.pojo.vo.UserFindAllVo;
 import com.example.filesystem.service.UserService;
 import com.example.filesystem.util.JwtUtil;
 import com.example.filesystem.util.ThreadLocalUtil;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -152,5 +154,23 @@ public class UserServiceImpl implements UserService {
         }
 
         return new ResponseVo("注册成功",null,"0x200");
+    }
+
+    /**
+     * @author zhuxinyu 2023-12-01
+     *      返回所有用户的基础信息
+     * @return
+     */
+    @Override
+    public ResponseVo userFindAll() {
+        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
+        Long userId = Long.valueOf(userIdOfStr);
+
+        if(userId == null || userId == 0L){
+            return new ResponseVo("token解析失败",null,"0x501");
+        }
+        List<UserFindAllVo> list = userMapper.userFindAll();
+
+        return new ResponseVo("查询成功",list,"0x200");
     }
 }

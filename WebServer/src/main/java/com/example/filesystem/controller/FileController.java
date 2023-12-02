@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONArray;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.service.FileService;
+import com.example.filesystem.util.FtpUtils;
 import com.example.filesystem.util.ThreadLocalUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,9 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.util.Map;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @CrossOrigin
 @Api(value = "文件板块接口",tags = {"文件板块接口"})
@@ -21,13 +25,38 @@ import java.util.Map;
 @RequestMapping("/file")
 public class FileController {
 
+
     @Autowired
     private FileService fileService;
 
 
+    @ApiOperation("文件从服务器下载")
+    @RequestMapping(value = "downloadfile",method = {RequestMethod.POST})
+    public void upload(HttpServletRequest httpServletRequest,@RequestParam  String reteFilePath ,@RequestParam String loFilePath ) throws Exception {
+
+        //此处传入文件的绝对路径
+        FtpUtils.download(reteFilePath,loFilePath);
+
+
+    }
     /**
      * @author Oh...Yeah!!! 2023-11-13
-     *    文件上传
+     *    文件上传到服务器
+     * @param
+     * @param file
+     * @return String.class
+     */
+    @ApiOperation("文件上传到服务器")
+    @RequestMapping(value = "file",method = {RequestMethod.POST})
+    public void upload(HttpServletRequest httpServletRequest,@RequestParam("file")  MultipartFile file) throws Exception {
+        byte[] bytes = file.getBytes();
+        FtpUtils.sshSftp(bytes,file.getOriginalFilename());
+
+    }
+
+    /**
+     * @author Oh...Yeah!!! 2023-11-13
+     *    文件本地上传
      * @param token
      * @param file
      * @return String.class
@@ -122,7 +151,7 @@ public class FileController {
      * @param downloadFileBo
      * @return
      */
-    @PostMapping("/downloadFile")
+/*    @PostMapping("/downloadFile")
     @ApiOperation("下载文件功能")
     public String downloadFile(@RequestBody DownloadFileBo downloadFileBo, HttpServletResponse response){
         Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
@@ -133,7 +162,7 @@ public class FileController {
         }
 
         return JSONArray.toJSONString(fileService.downloadFile(downloadFileBo,response));
-    }
+    }*/
 
     /**
      * @author zzy 2023-11-30

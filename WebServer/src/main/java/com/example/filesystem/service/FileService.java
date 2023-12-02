@@ -48,7 +48,9 @@ public interface FileService {
      * @param downloadFileBo
      * @return
      */
-    ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response);
+    //ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response);
+  //      void downloadFile(String fileURL) throws IOException;
+
 
     /**
      * @author Oh...Yeah!!! 2023-11-13
@@ -75,4 +77,4 @@ public interface FileService {
      * @return
      */
     ResponseVo moveFileOrFolder(MoveFileOrFolderBo moveFileOrFolderBo);
-}
+    }

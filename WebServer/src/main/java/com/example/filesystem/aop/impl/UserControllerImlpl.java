@@ -2,6 +2,7 @@ package com.example.filesystem.aop.impl;
 
 import com.example.filesystem.aop.UserControllerAop;
 import com.example.filesystem.pojo.bo.UserDeleteBo;
+import com.example.filesystem.pojo.bo.UserPagingToGetDataBo;
 import com.example.filesystem.pojo.bo.UserSelectBo;
 import com.example.filesystem.pojo.bo.UserUpdateBo;
 import com.example.filesystem.pojo.vo.UserFindAllVo;
@@ -79,6 +80,21 @@ public class UserControllerImlpl implements UserControllerAop {
         Object[] args = joinPoint.getArgs();
         String token = (String) args[0];
         systemService.isAdmin(token , 1);
+        return null;
+    }
+
+    /**
+     * @author zhuxinyu 2023-12-02
+     *      分页查询
+     * @param joinPoint
+     * @return
+     */
+    @Override
+    public String userPagingToGetData(JoinPoint joinPoint) {
+        Object[] args = joinPoint.getArgs();
+        UserPagingToGetDataBo userPagingToGetDataBo = (UserPagingToGetDataBo) args[0];
+        String token = userPagingToGetDataBo.getToken();
+        systemService.auth(token);
         return null;
     }
 

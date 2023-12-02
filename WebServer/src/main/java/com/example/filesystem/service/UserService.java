@@ -53,4 +53,12 @@ public interface UserService {
      * @return
      */
     ResponseVo userFindAll();
+
+    /**
+     * @author zhuxinyu 2023-12-02
+     *      分页查询
+     * @param userPagingToGetDataBo
+     * @return
+     */
+    ResponseVo userPagingToGetData(UserPagingToGetDataBo userPagingToGetDataBo);
 }

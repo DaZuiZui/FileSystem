@@ -5,6 +5,7 @@ import com.example.filesystem.pojo.User;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.pojo.vo.UserFindAllVo;
+import com.example.filesystem.pojo.vo.UserPagingToGetDataVo;
 import com.example.filesystem.service.UserService;
 import com.example.filesystem.util.JwtUtil;
 import com.example.filesystem.util.ThreadLocalUtil;
@@ -172,5 +173,23 @@ public class UserServiceImpl implements UserService {
         List<UserFindAllVo> list = userMapper.userFindAll();
 
         return new ResponseVo("查询成功",list,"0x200");
+    }
+
+    /**
+     * @author zhuxinyu 2023-12-02
+     *      分页查询
+     * @param userPagingToGetDataBo
+     * @return
+     */
+    @Override
+    public ResponseVo userPagingToGetData(UserPagingToGetDataBo userPagingToGetDataBo) {
+        //
+        List<User> userList = userMapper.userPagingToGetUserData(userPagingToGetDataBo);
+
+        UserPagingToGetDataVo userPagingToGetDataVo = new UserPagingToGetDataVo();
+        userPagingToGetDataVo.setCount(userList.size());
+        userPagingToGetDataVo.setList(userList);
+
+        return null;
     }
 }

@@ -36,4 +36,12 @@ public interface UserControllerAop {
      * @return
      */
     public String userFindAll(JoinPoint joinPoint);
+
+    /**
+     * @author zhuxinyu 2023-12-02
+     *      分页查找user鉴权
+     * @param joinPoint
+     * @return
+     */
+    public String userPagingToGetData(JoinPoint joinPoint);
 }

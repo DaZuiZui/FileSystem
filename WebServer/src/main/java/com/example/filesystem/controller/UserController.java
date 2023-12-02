@@ -121,5 +121,24 @@ public class UserController {
         return JSONArray.toJSONString(userService.userFindAll());
     }
 
+    /**
+     * @author zhuxinyu 2023-12-02
+     *      分页查询
+     * @param userPagingToGetDataBo
+     * @return
+     */
+    @PostMapping("/paingQuery")
+    @ApiOperation("分页查询")
+    public String userPaingToGetData(@RequestBody UserPagingToGetDataBo userPagingToGetDataBo){
+        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
+        ThreadLocalUtil.mapThreadLocal.remove();
+        if ( map.get("error") != null) {
+            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
+        }
+        if (userPagingToGetDataBo == null) {
+            return JSONArray.toJSONString(new ResponseVo<>("参数为null",null,"0x455"));
+        }
+        return JSONArray.toJSONString(userService.userPagingToGetData(userPagingToGetDataBo));
+    }
 
 }

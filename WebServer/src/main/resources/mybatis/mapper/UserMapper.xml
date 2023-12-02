@@ -99,4 +99,22 @@
             user t1
         limit 0,15
     </select>
+
+    <!--分页获取用户数据集合 -->
+    <select id="userPagingToGetUserData" resultType="com.example.filesystem.pojo.User"
+            parameterType="com.example.filesystem.pojo.bo.UserPagingToGetDataBo">
+        select
+            *
+        from
+        user
+        <where>
+            <if test="name != null and name != ''">
+                name = #{name} and
+            </if>
+        </where>
+            status = #{status} and
+            del_flag = #{delFlag}
+        limit
+            #{start},#{size}
+    </select>
 </mapper>

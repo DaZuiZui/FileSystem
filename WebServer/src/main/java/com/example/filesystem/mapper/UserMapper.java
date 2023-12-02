@@ -2,6 +2,7 @@ package com.example.filesystem.mapper;
 
 import com.example.filesystem.pojo.User;
 import com.example.filesystem.pojo.bo.UserAddBo;
+import com.example.filesystem.pojo.bo.UserPagingToGetDataBo;
 import com.example.filesystem.pojo.bo.UserRegBo;
 import com.example.filesystem.pojo.vo.UserFindAllVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -75,4 +76,12 @@ public interface UserMapper {
      * @return
      */
     List<UserFindAllVo> userFindAll();
+
+    /**
+     * @auther zhuxinyu 2023-12-02
+     *      分页查询
+     * @param userPagingToGetDataBo
+     * @return
+     */
+    List<User> userPagingToGetUserData(UserPagingToGetDataBo userPagingToGetDataBo);
 }

@@ -13,6 +13,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -31,6 +40,9 @@ public class FileServiceImpl implements FileService {
     private String projecturl;
     @Autowired
     private FileMapper fileMapper;
+
+
+
 
     /**
      * @author hln 2023-11-28
@@ -140,47 +152,6 @@ public class FileServiceImpl implements FileService {
         return new ResponseVo("修改成功",null,"0x200");
     }
 
-    /**
-     * @author hln 2023-11-29
-     *      下载文件功能
-     * @param downloadFileBo
-     * @return
-     */
-    @Override
-    public ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response) {
-        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
-        Long userId = Long.valueOf(userIdOfStr);
-
-        if (userId == null || userId == 0L) {
-            return new ResponseVo("token解析失败", null, "0x501");
-        }
-
-        // 获取file的path
-        String serverFilename = downloadFileBo.getServerFilename();
-        String filePath = fileMapper.selectToGetPathFile(serverFilename);
-
-        File file = new File(filePath);
-        try (InputStream inputStream = new FileInputStream(file);
-             OutputStream outputStream = response.getOutputStream()) {
-
-            response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
-            response.setContentType("application/octet-stream");
-
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-
-            response.flushBuffer();
-        } catch (IOException e) {
-            e.printStackTrace();
-            // 处理异常，返回适当的错误信息
-            return new ResponseVo("文件下载失败", null, "0x502");
-        }
-
-        return new ResponseVo("文件下载成功",null,"0x200");
-    }
 
     /**
      * @author zzy 2023-11-30
@@ -238,7 +209,7 @@ public class FileServiceImpl implements FileService {
      * @return String.class
      */
     @Override
-    public String imgUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException{
+    public String fileUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException{
         //获取文件名
         String fileName = file.getOriginalFilename();
         //获取文件后缀名。也可以在这里添加判断语句，规定特定格式的文件才能上传，否则拒绝保存。

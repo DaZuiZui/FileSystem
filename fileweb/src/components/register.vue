@@ -18,10 +18,6 @@
             <label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名&nbsp;:&nbsp;&nbsp;
                 <input type="text" v-model="user.name"/></label>
         </div>
-        <div class="input-box">
-            <label>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号&nbsp;:&nbsp;&nbsp;
-                <input type="text" v-model="user.studentId"/></label>
-        </div>
         
         <div class="input-box">
             <label>
@@ -61,14 +57,16 @@
         <div class="btn-box">
 
             <div>
-                <button @click="submit">登录</button>
-                <button @click="submit">注册</button>
+                <button @click="register">注册</button>
+                <button @click="router.push('/login')">已有账号,去登录</button>
+
             </div>
         </div>
     </div>
 </template> 
   
 <script setup>
+import router from '@/router';
 import { ref, reactive, onMounted } from 'vue';
 
 
@@ -193,7 +191,7 @@ onMounted(() => {
     }
 });
 
-async function submit() {
+async function register() {
     switchbutton.value = true;
 
     if (user.username === '') {
@@ -247,7 +245,7 @@ async function submit() {
      const obj = await synRequestPost('/user/userReg', user);
 
      if (obj.code === '0x200') {
-        $router.push('/login');
+        router.push('/login');
      }
 
     switchbutton.value = false;
@@ -322,7 +320,7 @@ async function submit() {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
     margin-bottom: 10px;
 }
 
@@ -356,7 +354,7 @@ async function submit() {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
     margin-bottom: 20px;
 }
 
@@ -377,7 +375,7 @@ async function submit() {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
     margin-top: 20px;
 }
 

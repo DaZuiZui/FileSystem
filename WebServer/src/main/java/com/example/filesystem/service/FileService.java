@@ -42,15 +42,6 @@ public interface FileService {
      */
     ResponseVo updateFileOrFolder(UpdateFileOrFolderBo updateFileOrFolderBo);
 
-    /**
-     * @author hln 2023-11-29
-     *      下载文件功能
-     * @param downloadFileBo
-     * @return
-     */
-    //ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response);
-  //      void downloadFile(String fileURL) throws IOException;
-
 
     /**
      * @author Oh...Yeah!!! 2023-11-13
@@ -61,8 +52,6 @@ public interface FileService {
      */
     public String fileUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException;
 
-
-    ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response);
 
     /**
      * @author zzy 2023-11-30

@@ -65,15 +65,12 @@ public class FileController {
      */
     @ApiOperation("文件上传")
     @RequestMapping(value = "imgUpDown",method = {RequestMethod.POST})
-    public String fileUpDown(@RequestParam("file") MultipartFile file ) throws IOException {
-
-        //获取HttpServletRequest对象
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    public String fileUpDown(HttpServletRequest httpServletRequest,@RequestParam("file") MultipartFile file ) throws IOException {
 
         //获取请求头中的token
-        String token  = request.getHeader("token");
+        String token  = httpServletRequest.getHeader("Cookie");
 
-        return fileService.fileUpDown(file,token);
+        return fileService.fileUpDown(file,token.substring(6));
 
     }
 
@@ -155,24 +152,6 @@ public class FileController {
         return JSONArray.toJSONString(fileService.updateFileOrFolder(updateFileOrFolderBo));
     }
 
-    /**
-     * @author hln 2023-11-29
-     *      下载文件功能
-     * @param downloadFileBo
-     * @return
-     */
-/*    @PostMapping("/downloadFile")
-    @ApiOperation("下载文件功能")
-    public String downloadFile(@RequestBody DownloadFileBo downloadFileBo, HttpServletResponse response){
-        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
-        ThreadLocalUtil.mapThreadLocal.remove();
-
-        if (map.get("error") != null) {
-            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
-        }
-
-        return JSONArray.toJSONString(fileService.downloadFile(downloadFileBo,response));
-    }*/
 
     /**
      * @author zzy 2023-11-30

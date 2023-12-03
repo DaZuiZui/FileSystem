@@ -5,6 +5,10 @@ spring:
     url: jdbc:mysql://172.30.34.66:3306/file_system
     username: root
     password: TLMTEAMYLL4523..
+  servlet:
+    multipart:
+      max-file-size: 10000MB
+      max-request-size: 100000MB
 
 server:
   port: 8010

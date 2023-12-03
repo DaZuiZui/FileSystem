@@ -3,8 +3,9 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
+import VueCookies from 'vue3-cookies'
+
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
-createApp(App).use(router).use(ElementPlus).mount('#app');
-
+const app = createApp(App).use(router).use(VueCookies).use(ElementPlus).mount('#app');

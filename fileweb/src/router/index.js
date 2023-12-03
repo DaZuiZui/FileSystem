@@ -3,14 +3,20 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../components/login.vue'
 import Register from '../components/register.vue'
 import Home from '@/views/Home.vue'
+import Disk from '@/views/disk'
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home,
     // 子
-    // children: [
-    // ]
+    children: [
+      {
+        path: 'disk',
+        name: 'disk',
+        component: Disk
+      },
+    ]
     
   },
   //登录面板

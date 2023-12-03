@@ -33,10 +33,10 @@
             </div>
           </div>
           <ul class="left_links" v-if="left_btn">
-            <li><a href="Home">Home</a></li>
-            <li><a href="About">About</a></li>
-            <li><a href="Services">Services</a></li>
-            <li><a href="Countact">Countact</a></li>
+            <li><router-link to="/disk"> 首页 </router-link></li>
+            <li><router-link to="/disk">About</router-link></li>
+            <li><router-link to="/disk">Services</router-link></li>
+            <li><router-link to="/disk">Countact</router-link></li>
           </ul>
         </div>
       </div>
@@ -53,6 +53,7 @@
   </div>
 </template>
 <script setup>
+import router from '@/router';
 import { ref, reactive, onMounted, toRefs, computed } from 'vue';
 // 控制头部导航栏
 const top_btn = ref(false);

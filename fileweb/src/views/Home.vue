@@ -1,29 +1,7 @@
 <template>
   <div class="box">
     <!-- 头栏目 -->
-    <header>
-      <div class="navbor">
-        <div class="logo"><a href="#">Web Creative</a></div>
-        <ul class="links">
-          <li><a href="Home">Home</a></li>
-          <li><a href="About">About</a></li>
-          <li><a href="Services">Services</a></li>
-          <li><a href="Countact">Countact</a></li>
-        </ul>
-        <a href="#" class="action_btn">Get Started</a>
-        <div class="toggle_btn" @click="updateTopMenu">
-          <i class="fa-solid fa-bars fa-beat fa-xl"></i>
-        </div>
-      </div>
-      <!-- 点击面包屑后的展示 -->
-      <div class="dropdown_menu" v-if="top_btn">
-        <li><a href="Home">Home</a></li>
-        <li><a href="About">About</a></li>
-        <li><a href="Services">Services</a></li>
-        <li><a href="Countact">Countact</a></li>
-        <li><a href="#" class="action_btn">Get Started</a></li>
-      </div>
-    </header>
+   <Top/>
     <div class="content">
       <div class="left_block">
         <div class="left_navbor">
@@ -53,6 +31,7 @@
   </div>
 </template>
 <script setup>
+import Top from '@/components/top.vue'
 import router from '@/router';
 import { ref, reactive, onMounted, toRefs, computed } from 'vue';
 // 控制头部导航栏

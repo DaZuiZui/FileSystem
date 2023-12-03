@@ -10,6 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,8 +65,16 @@ public class FileController {
      */
     @ApiOperation("文件上传")
     @RequestMapping(value = "imgUpDown",method = {RequestMethod.POST})
-    public String imgUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException {
-        return fileService.imgUpDown(file,token);
+    public String fileUpDown(@RequestParam("file") MultipartFile file ) throws IOException {
+
+        //获取HttpServletRequest对象
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+        //获取请求头中的token
+        String token  = request.getHeader("token");
+
+        return fileService.fileUpDown(file,token);
+
     }
 
 

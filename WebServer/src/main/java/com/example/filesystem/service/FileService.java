@@ -59,7 +59,7 @@ public interface FileService {
      * @param file
      * @return String.class
      */
-    public String imgUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException;
+    public String fileUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException;
 
 
     /**

@@ -246,5 +246,10 @@ public class FileServiceImpl implements FileService {
         return JSONArray.toJSONString(new ResponseVo<>("success",projecturl+"/system/getfile?fileUrl="+id+"/"+fileName,"0x200"));
     }
 
+    @Override
+    public ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response) {
+        return null;
+    }
+
 
 }

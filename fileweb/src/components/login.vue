@@ -7,12 +7,12 @@
     </div>
     <div class="input-box">
       <label>密码</label>
-      <input type="password" v-model="user.password" />
+      <input type="password" v-model="user.password" @keyup.enter="submitForm"/>
     </div>
     <div class="btn-box">
       <div>
-        <button @click="submitForm">登录</button>
-        <el-button type="primary" round @click="router.push('/register')"
+        <button @click="submitForm"  >登录</button>
+        <el-button type="primary" round @click="router.push('/register')" 
           >没有账号,去注册</el-button
         >
       </div>
@@ -46,7 +46,7 @@ async function submitForm() {
   // 移除cookie
   // cookies.remove('token');
 //   setCookie("token", result.data.data.token);
-
+   router.push('/')
   // 可以在这里添加表单提交的逻辑
 }
 </script>

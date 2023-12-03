@@ -62,6 +62,8 @@ public interface FileService {
     public String imgUpDown(@RequestParam("file") MultipartFile file, @RequestParam("token")String token) throws IOException;
 
 
+    ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response);
+
     /**
      * @author zzy 2023-11-30
      *      新建文件夹

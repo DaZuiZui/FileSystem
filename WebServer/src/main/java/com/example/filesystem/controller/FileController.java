@@ -15,6 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -152,6 +153,24 @@ public class FileController {
         return JSONArray.toJSONString(fileService.updateFileOrFolder(updateFileOrFolderBo));
     }
 
+    /**
+     * @author hln 2023-11-29
+     *      下载文件功能
+     * @param downloadFileBo
+     * @return
+     */
+    @PostMapping("/downloadFile")
+    @ApiOperation("下载文件功能")
+    public String downloadFile(@RequestBody DownloadFileBo downloadFileBo, HttpServletResponse response){
+        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
+        ThreadLocalUtil.mapThreadLocal.remove();
+
+        if (map.get("error") != null) {
+            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
+        }
+
+        return JSONArray.toJSONString(fileService.downloadFile(downloadFileBo,response));
+    }
 
     /**
      * @author zzy 2023-11-30

@@ -27,6 +27,14 @@ public interface FileService {
     ResponseVo deleteFileOrFolder(DeleteFileOrFolderBo deleteFileOrFolderBo);
 
     /**
+     * @author hln 2023-11-29
+     *      下载文件功能
+     * @param downloadFileBo
+     * @return
+     */
+    ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response);
+
+    /**
      * @author hln 2023-11-28
      *      查看修改文件的人
      * @param selectUpdateByToFileBo

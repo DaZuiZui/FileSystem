@@ -233,8 +233,10 @@ public class FileServiceImpl implements FileService {
 
         long userId = Long.parseLong(id);
 
+        String severPath = projecturl+"/system/getfile?fileUrl="+id+"/"+fileName;
+
         com.example.filesystem.pojo.File newFile = new com.example.filesystem.pojo.File(
-                path+""+id+"/"+ fileName,"/" + fileName,
+                severPath,"/" + fileName,
                 file.getSize(),0,0,
                 suffixName,userId,new Date(),
                 userId,new Date(),0,0
@@ -243,7 +245,7 @@ public class FileServiceImpl implements FileService {
         fileMapper.addFile(newFile);
 
 
-        return JSONArray.toJSONString(new ResponseVo<>("success",projecturl+"/system/getfile?fileUrl="+id+"/"+fileName,"0x200"));
+        return JSONArray.toJSONString(new ResponseVo<>("success",severPath,"0x200"));
     }
 
 

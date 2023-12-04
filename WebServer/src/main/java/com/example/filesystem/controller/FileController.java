@@ -30,6 +30,20 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
+    /**
+     * @author Oh...Yeah!!! 2023-11-13
+     *    文件下载
+     * @param
+     * @param
+     * @return String.class
+     */
+    @ApiOperation("文件下载")
+    @RequestMapping(value = "downloadfile",method = {RequestMethod.POST})
+    public ResponseVo upload(@RequestParam  String reteFilePath ,@RequestParam String loFilePath) throws Exception {
+
+        //此处传入文件的绝对路径
+        return fileService.download(reteFilePath,loFilePath);
+    }
 
     /**
      * @author Oh...Yeah!!! 2023-11-13

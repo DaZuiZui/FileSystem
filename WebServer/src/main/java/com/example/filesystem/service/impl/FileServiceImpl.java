@@ -2,6 +2,7 @@ package com.example.filesystem.service.impl;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.example.filesystem.mapper.FileMapper;
+import com.example.filesystem.pojo.FileDownLoad;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
@@ -25,6 +26,8 @@ import java.net.URL;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -197,6 +200,71 @@ public class FileServiceImpl implements FileService {
         }
 
         return new ResponseVo("移动成功",null,"0x200");
+
+    }
+
+    /**
+     * @author Oh...Yeah!!! 2023-11-13
+     *    文件下载
+     * @param
+     * @param
+     * @return String.class
+     */
+    @Override
+    public ResponseVo download(String reteFilePath, String loFilePath) {
+
+        String sourceFilePath = "reteFilePath"; //源文件路径
+        String targetFolderPath = "loFilePath"; //目标文件路径
+
+        try {
+
+            // 创建目标文件夹（如果不存在）
+            File targetFolder = new File(targetFolderPath);
+            if (!targetFolder.exists()) {
+                targetFolder.mkdir();
+            }
+
+            // 打开源文件和目标文件通道
+            FileInputStream sourceFileInputStream = new FileInputStream(sourceFilePath);
+            FileOutputStream targetFileOutputStream = new FileOutputStream(targetFolderPath + "/" + new File(sourceFilePath).getName());
+            FileChannel sourceFileChannel = sourceFileInputStream.getChannel();
+            FileChannel targetFileChannel = targetFileOutputStream.getChannel();
+
+            // 分配直接内存缓冲区
+            ByteBuffer buffer = ByteBuffer.allocateDirect(1024 * 1024);
+
+            // 从源文件通道读取数据，并写入目标文件通道
+            while (sourceFileChannel.read(buffer) != -1) {
+                buffer.flip();
+                targetFileChannel.write(buffer);
+                buffer.clear();
+            }
+
+            // 关闭通道和流
+            sourceFileChannel.close();
+            targetFileChannel.close();
+            sourceFileInputStream.close();
+            targetFileOutputStream.close();
+
+            FileDownLoad fd = new FileDownLoad();
+
+
+
+          //  fileMapper.addFileDownLoad();
+
+
+            return new ResponseVo<>("success",null,"0x200");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ResponseVo<>("fail",null,"0x507");
+
+
+
+        }
+
+
 
     }
 

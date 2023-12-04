@@ -3,6 +3,7 @@ package com.example.filesystem.service.impl;
 import com.example.filesystem.mapper.UserMapper;
 import com.example.filesystem.pojo.User;
 import com.example.filesystem.pojo.bo.*;
+import com.example.filesystem.pojo.vo.FindAllNewVo;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.pojo.vo.UserFindAllVo;
 import com.example.filesystem.pojo.vo.UserPagingToGetDataVo;
@@ -12,6 +13,7 @@ import com.example.filesystem.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +66,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public ResponseVo userDelete(UserDeleteBo userDeleteBo) {
+    public ResponseVo userDelete(UserDeleteBo userDeleteBo, String token) throws IOException {
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
 
@@ -176,7 +178,8 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *
+     * @author zhuxinyu 2023-12-04
+     *查询所有的分页查询，模糊查询
      * @param userFindAllBo
      * @return
      */
@@ -188,16 +191,20 @@ public class UserServiceImpl implements UserService {
         if(userId == null || userId == 0L){
             return new ResponseVo("token解析失败",null,"0x501");
         }
+
+        int start = userFindAllBo.getStart()*userFindAllBo.getSize();
+        userFindAllBo.setStart(start);
         List<UserFindAllVo> list ;
 
-        if (userFindAllBo.getId() != null || userFindAllBo.getUsername() != null || userFindAllBo.getName() != null ||
-                userFindAllBo.getGrade() != null || userFindAllBo.getOrg() != null) {
-            list = userMapper.findAllUser(userFindAllBo);
-        }else {
-            list = userMapper.userFindAll();
-        }
 
-        return new ResponseVo("查询成功",list,"0x200");
+        list = userMapper.findAllUser(userFindAllBo);
+
+        int count = userMapper.selectToGetCount(userFindAllBo);
+        FindAllNewVo findAllVoNew = new FindAllNewVo();
+        findAllVoNew.setList(list);
+        findAllVoNew.setCount(count);
+
+        return new ResponseVo("查询成功",findAllVoNew,"0x200");
     }
 
     /**

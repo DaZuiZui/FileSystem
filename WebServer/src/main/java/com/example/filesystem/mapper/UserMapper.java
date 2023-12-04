@@ -77,7 +77,11 @@ public interface UserMapper {
      * @return
      */
     List<UserFindAllVo> userFindAll();
-
+    /**
+     * @author zhuxinyu 2023-12-03
+     *      查询所有的分页查询，模糊查询
+     * @return
+     */
     List<UserFindAllVo> findAllUser(UserFindAllBo userFindAllBo);
     /**
      * @auther zhuxinyu 2023-12-02
@@ -86,4 +90,11 @@ public interface UserMapper {
      * @return
      */
     List<User> userPagingToGetUserData(UserPagingToGetDataBo userPagingToGetDataBo);
+
+    /**
+     * @author zhuxinyu 2023-12-03
+     *      返回用户表中所有数据的个数
+     * @return
+     */
+    int selectToGetCount(UserFindAllBo userFindAllBo);
 }

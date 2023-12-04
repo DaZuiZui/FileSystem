@@ -48,13 +48,14 @@ public class UserController {
      */
     @PostMapping("/delete")
     @ApiOperation("删除用户通过id")
-    public String userDelete(@RequestBody UserDeleteBo userDeleteBo){
+    public String userDelete(HttpServletRequest httpServletRequest,@RequestBody UserDeleteBo userDeleteBo) throws IOException {
         Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
         ThreadLocalUtil.mapThreadLocal.remove();
         if ( map.get("error") != null) {
             return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
         }
-        return JSONArray.toJSONString(userService.userDelete(userDeleteBo));
+        String token = httpServletRequest.getHeader("Cookie");
+        return JSONArray.toJSONString(userService.userDelete(userDeleteBo,token.substring(6)));
     }
 
     /**
@@ -109,7 +110,7 @@ public class UserController {
 
     /**
      * @author zhuxinyu 2023-12-01
-     *      返回所有用户的基础信息
+     *      查询所有的分页查询，模糊查询
      * @param userFindAllBo
      * @return
      */

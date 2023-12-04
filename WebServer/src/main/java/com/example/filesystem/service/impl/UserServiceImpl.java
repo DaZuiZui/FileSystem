@@ -13,6 +13,7 @@ import com.example.filesystem.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public ResponseVo userDelete(UserDeleteBo userDeleteBo) {
+    public ResponseVo userDelete(UserDeleteBo userDeleteBo, String token) throws IOException {
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
 
@@ -177,7 +178,8 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *
+     * @author zhuxinyu 2023-12-04
+     *查询所有的分页查询，模糊查询
      * @param userFindAllBo
      * @return
      */
@@ -196,6 +198,7 @@ public class UserServiceImpl implements UserService {
 
 
         list = userMapper.findAllUser(userFindAllBo);
+
         int count = userMapper.selectToGetCount(userFindAllBo);
         FindAllNewVo findAllVoNew = new FindAllNewVo();
         findAllVoNew.setList(list);

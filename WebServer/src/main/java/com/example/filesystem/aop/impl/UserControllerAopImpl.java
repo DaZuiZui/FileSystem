@@ -1,11 +1,7 @@
 package com.example.filesystem.aop.impl;
 
 import com.example.filesystem.aop.UserControllerAop;
-import com.example.filesystem.pojo.bo.UserDeleteBo;
-import com.example.filesystem.pojo.bo.UserPagingToGetDataBo;
-import com.example.filesystem.pojo.bo.UserSelectBo;
-import com.example.filesystem.pojo.bo.UserUpdateBo;
-import com.example.filesystem.pojo.vo.UserFindAllVo;
+import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.service.SystemService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-public class UserControllerImlpl implements UserControllerAop {
+public class UserControllerAopImpl implements UserControllerAop {
     @Autowired
     private SystemService systemService;
 
@@ -75,10 +71,11 @@ public class UserControllerImlpl implements UserControllerAop {
      * @return
      */
     @Override
-    @Before("execution(* com.example.filesystem.controller.UserController.userFindAll(..))")
+    @Before("execution(* com.example.filesystem.controller.UserController.findAllUser(..))")
     public String userFindAll(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
-        String token = (String) args[0];
+        UserFindAllBo userFindAllBo = (UserFindAllBo) args[0];
+        String token = userFindAllBo.getToken();
         systemService.isAdmin(token , 1);
         return null;
     }

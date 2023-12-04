@@ -9,6 +9,7 @@ public class UserPagingToGetDataBo implements Serializable {
     private String name;//id
     private Integer status;//0为私有活动 1多个社团活动 2 所有社团活动
     private Integer delFlag;//逻辑删除
+
     public UserPagingToGetDataBo(){
 
     }

@@ -99,7 +99,25 @@
             user t1
         limit 0,15
     </select>
-
+    <!--查询所有用户的基础信息-->
+    <select id="findAllUser" resultType="com.example.filesystem.pojo.vo.UserFindAllVo"
+            parameterType="com.example.filesystem.pojo.bo.UserFindAllBo" >
+        select
+            t1.id,t1.username,t1.name,t1.grade,t1.org,count(id)
+        from
+            user t1
+        where
+            id = #{id}
+          and
+            username like concat('%',#{username},'%')
+          and
+            name like concat('%',#{name},'%')
+          and
+            grade like concat('%',#{grade},'%')
+          and
+            org like concat('%',#{org},'%')
+            limit #{start},#{size}
+    </select>
     <!--分页获取用户数据集合 -->
     <select id="userPagingToGetUserData" resultType="com.example.filesystem.pojo.User"
             parameterType="com.example.filesystem.pojo.bo.UserPagingToGetDataBo">

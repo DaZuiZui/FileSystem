@@ -10,7 +10,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Map;
 
 @CrossOrigin
@@ -107,19 +110,19 @@ public class UserController {
     /**
      * @author zhuxinyu 2023-12-01
      *      返回所有用户的基础信息
-     * @param token
+     * @param userFindAllBo
      * @return
      */
     @PostMapping("/userFindAll")
     @ApiOperation("返回所有用户的基础信息")
-    public String userFindAll(@RequestParam String token){
+    public String findAllUser(@RequestBody UserFindAllBo userFindAllBo){
         Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
         ThreadLocalUtil.mapThreadLocal.remove();
         if ( map.get("error") != null) {
             return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
         }
 
-        return JSONArray.toJSONString(userService.userFindAll());
+        return JSONArray.toJSONString(userService.findAllUser(userFindAllBo));
     }
 
     /**

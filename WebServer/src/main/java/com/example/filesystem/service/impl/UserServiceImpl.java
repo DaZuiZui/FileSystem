@@ -176,6 +176,31 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     *
+     * @param userFindAllBo
+     * @return
+     */
+    @Override
+    public ResponseVo findAllUser(UserFindAllBo userFindAllBo) {
+        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
+        Long userId = Long.valueOf(userIdOfStr);
+
+        if(userId == null || userId == 0L){
+            return new ResponseVo("token解析失败",null,"0x501");
+        }
+        List<UserFindAllVo> list ;
+
+        if (userFindAllBo.getId() != null || userFindAllBo.getUsername() != null || userFindAllBo.getName() != null ||
+                userFindAllBo.getGrade() != null || userFindAllBo.getOrg() != null) {
+            list = userMapper.findAllUser(userFindAllBo);
+        }else {
+            list = userMapper.userFindAll();
+        }
+
+        return new ResponseVo("查询成功",list,"0x200");
+    }
+
+    /**
      * @author zhuxinyu 2023-12-02
      *      分页查询
      * @param userPagingToGetDataBo
@@ -183,9 +208,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public ResponseVo userPagingToGetData(UserPagingToGetDataBo userPagingToGetDataBo) {
-        //
+        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
+        Long userId = Long.valueOf(userIdOfStr);
         List<User> userList = userMapper.userPagingToGetUserData(userPagingToGetDataBo);
-
         UserPagingToGetDataVo userPagingToGetDataVo = new UserPagingToGetDataVo();
         userPagingToGetDataVo.setCount(userList.size());
         userPagingToGetDataVo.setList(userList);

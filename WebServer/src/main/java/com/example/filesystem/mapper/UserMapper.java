@@ -2,6 +2,7 @@ package com.example.filesystem.mapper;
 
 import com.example.filesystem.pojo.User;
 import com.example.filesystem.pojo.bo.UserAddBo;
+import com.example.filesystem.pojo.bo.UserFindAllBo;
 import com.example.filesystem.pojo.bo.UserPagingToGetDataBo;
 import com.example.filesystem.pojo.bo.UserRegBo;
 import com.example.filesystem.pojo.vo.UserFindAllVo;
@@ -77,6 +78,7 @@ public interface UserMapper {
      */
     List<UserFindAllVo> userFindAll();
 
+    List<UserFindAllVo> findAllUser(UserFindAllBo userFindAllBo);
     /**
      * @auther zhuxinyu 2023-12-02
      *      分页查询

@@ -1,13 +1,10 @@
 package com.example.filesystem.pojo.bo;
 
-import com.example.filesystem.pojo.vo.UserFindAllVo;
-import com.example.filesystem.service.UserService;
 
 import java.io.Serializable;
 
 public class UserFindAllBo implements Serializable {
     private String token;
-    private Long id;//用户id
     private String username;//用户账号
     private String name;//用户名
     private Long grade;//年级
@@ -19,9 +16,8 @@ public class UserFindAllBo implements Serializable {
 
     }
 
-    public UserFindAllBo(String token, Long id, String username, String name, Long grade, String org, Integer start, Integer size) {
+    public UserFindAllBo(String token, String username, String name, Long grade, String org, Integer start, Integer size) {
         this.token = token;
-        this.id = id;
         this.username = username;
         this.name = name;
         this.grade = grade;
@@ -36,14 +32,6 @@ public class UserFindAllBo implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -98,7 +86,6 @@ public class UserFindAllBo implements Serializable {
     public String toString() {
         return "UserFindAllBo{" +
                 "token='" + token + '\'' +
-                ", id=" + id +
                 ", username='" + username + '\'' +
                 ", name='" + name + '\'' +
                 ", grade=" + grade +
@@ -107,16 +94,4 @@ public class UserFindAllBo implements Serializable {
                 ", size=" + size +
                 '}';
     }
-//    public void checkParam() {
-//        if (this.pageIndex == null || this.pageIndex < 0) {
-//            setPageIndex(1L);
-//        }
-//        if (this.pageSize == null || this.pageSize < 0 || this.pageSize > 100) {
-//            setPageSize(10L);
-//        }
-//    }
-//
-//    public Long getPageStart() {
-//        return (this.pageIndex - 1) * this.pageSize;
-//    }
 }

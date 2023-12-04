@@ -3,6 +3,7 @@ package com.example.filesystem.service.impl;
 import com.example.filesystem.mapper.UserMapper;
 import com.example.filesystem.pojo.User;
 import com.example.filesystem.pojo.bo.*;
+import com.example.filesystem.pojo.vo.FindAllNewVo;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.pojo.vo.UserFindAllVo;
 import com.example.filesystem.pojo.vo.UserPagingToGetDataVo;
@@ -188,16 +189,19 @@ public class UserServiceImpl implements UserService {
         if(userId == null || userId == 0L){
             return new ResponseVo("token解析失败",null,"0x501");
         }
+
+        int start = userFindAllBo.getStart()*userFindAllBo.getSize();
+        userFindAllBo.setStart(start);
         List<UserFindAllVo> list ;
 
-        if (userFindAllBo.getId() != null || userFindAllBo.getUsername() != null || userFindAllBo.getName() != null ||
-                userFindAllBo.getGrade() != null || userFindAllBo.getOrg() != null) {
-            list = userMapper.findAllUser(userFindAllBo);
-        }else {
-            list = userMapper.userFindAll();
-        }
 
-        return new ResponseVo("查询成功",list,"0x200");
+        list = userMapper.findAllUser(userFindAllBo);
+        int count = userMapper.selectToGetCount(userFindAllBo);
+        FindAllNewVo findAllVoNew = new FindAllNewVo();
+        findAllVoNew.setList(list);
+        findAllVoNew.setCount(count);
+
+        return new ResponseVo("查询成功",findAllVoNew,"0x200");
     }
 
     /**

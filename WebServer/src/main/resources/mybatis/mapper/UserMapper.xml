@@ -103,20 +103,44 @@
     <select id="findAllUser" resultType="com.example.filesystem.pojo.vo.UserFindAllVo"
             parameterType="com.example.filesystem.pojo.bo.UserFindAllBo" >
         select
-            t1.id,t1.username,t1.name,t1.grade,t1.org,count(id)
+            t1.username,t1.name,t1.grade,t1.org
         from
             user t1
         where
-            id = #{id}
-          and
-            username like concat('%',#{username},'%')
-          and
-            name like concat('%',#{name},'%')
-          and
-            grade like concat('%',#{grade},'%')
-          and
+        <if test="username != null">
+            username like concat('%',#{username},'%') and
+        </if>
+        <if test="name != null">
+            name like concat('%',#{name},'%') and
+        </if>
+        <if test="grade != null">
+            grade like concat('%',#{grade},'%') and
+        </if>
+        <if test="org != null">
             org like concat('%',#{org},'%')
-            limit #{start},#{size}
+        </if>
+        limit #{start},#{size}
+    </select>
+
+    <!-- 返回用户表中所有数据的个数 -->
+    <select id="selectToGetCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from
+        user
+        where
+        <if test="username != null">
+            username like concat('%',#{username},'%') and
+        </if>
+        <if test="name != null">
+            name like concat('%',#{name},'%') and
+        </if>
+        <if test="grade != null">
+            grade like concat('%',#{grade},'%') and
+        </if>
+        <if test="org != null">
+            org like concat('%',#{org},'%')
+        </if>
     </select>
     <!--分页获取用户数据集合 -->
     <select id="userPagingToGetUserData" resultType="com.example.filesystem.pojo.User"

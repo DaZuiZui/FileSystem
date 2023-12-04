@@ -86,4 +86,11 @@ public interface UserMapper {
      * @return
      */
     List<User> userPagingToGetUserData(UserPagingToGetDataBo userPagingToGetDataBo);
+
+    /**
+     * @author zhuxinyu 2023-12-03
+     *      返回用户表中所有数据的个数
+     * @return
+     */
+    int selectToGetCount(UserFindAllBo userFindAllBo);
 }

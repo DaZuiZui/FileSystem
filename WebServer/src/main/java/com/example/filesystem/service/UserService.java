@@ -54,6 +54,8 @@ public interface UserService {
      */
     ResponseVo userFindAll();
 
+    ResponseVo findAllUser(UserFindAllBo userFindAllBo);
+
     /**
      * @author zhuxinyu 2023-12-02
      *      分页查询

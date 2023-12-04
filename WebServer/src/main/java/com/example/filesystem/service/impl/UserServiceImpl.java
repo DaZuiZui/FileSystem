@@ -3,6 +3,7 @@ package com.example.filesystem.service.impl;
 import com.example.filesystem.mapper.UserMapper;
 import com.example.filesystem.pojo.User;
 import com.example.filesystem.pojo.bo.*;
+import com.example.filesystem.pojo.vo.FindAllNewVo;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.pojo.vo.UserFindAllVo;
 import com.example.filesystem.pojo.vo.UserPagingToGetDataVo;
@@ -176,6 +177,34 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     *
+     * @param userFindAllBo
+     * @return
+     */
+    @Override
+    public ResponseVo findAllUser(UserFindAllBo userFindAllBo) {
+        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
+        Long userId = Long.valueOf(userIdOfStr);
+
+        if(userId == null || userId == 0L){
+            return new ResponseVo("token解析失败",null,"0x501");
+        }
+
+        int start = userFindAllBo.getStart()*userFindAllBo.getSize();
+        userFindAllBo.setStart(start);
+        List<UserFindAllVo> list ;
+
+
+        list = userMapper.findAllUser(userFindAllBo);
+        int count = userMapper.selectToGetCount(userFindAllBo);
+        FindAllNewVo findAllVoNew = new FindAllNewVo();
+        findAllVoNew.setList(list);
+        findAllVoNew.setCount(count);
+
+        return new ResponseVo("查询成功",findAllVoNew,"0x200");
+    }
+
+    /**
      * @author zhuxinyu 2023-12-02
      *      分页查询
      * @param userPagingToGetDataBo
@@ -183,9 +212,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public ResponseVo userPagingToGetData(UserPagingToGetDataBo userPagingToGetDataBo) {
-        //
+        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
+        Long userId = Long.valueOf(userIdOfStr);
         List<User> userList = userMapper.userPagingToGetUserData(userPagingToGetDataBo);
-
         UserPagingToGetDataVo userPagingToGetDataVo = new UserPagingToGetDataVo();
         userPagingToGetDataVo.setCount(userList.size());
         userPagingToGetDataVo.setList(userList);

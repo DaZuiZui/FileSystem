@@ -18,12 +18,13 @@ public interface FileService {
     String findOwnFile(String substring);
 
     /**
-     * @author hln 2023-11-28
-     *      删除文件或文件夹
-     * @param deleteFileOrFolderBo
+     * @param serverFilename
+     * @param substring
      * @return
+     * @author hln 2023-11-28
+     * 删除文件或文件夹
      */
-    ResponseVo deleteFileOrFolder(DeleteFileOrFolderBo deleteFileOrFolderBo);
+    String deleteFileOrFolder(String serverFilename, String substring);
 
     /**
      * @author hln 2023-11-28

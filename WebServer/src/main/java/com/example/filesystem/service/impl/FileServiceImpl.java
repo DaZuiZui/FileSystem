@@ -63,28 +63,31 @@ public class FileServiceImpl implements FileService {
 
 
     /**
-     * @author hln 2023-11-28
-     *      删除文件或文件夹
-     * @param deleteFileOrFolderBo
+     * @param serverFilename
+     * @param token
      * @return
+     * @author hln 2023-12-05
+     * 删除文件或文件夹
      */
     @Override
-    public ResponseVo deleteFileOrFolder(DeleteFileOrFolderBo deleteFileOrFolderBo) {
+    public String deleteFileOrFolder(String serverFilename, String token) {
+//    public String deleteFileOrFolder(@RequestParam("serverFilename") String serverFilename, @RequestParam("token") String token) {
 
+        systemService.auth(token);
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
 
         if (userId == null || userId == 0L) {
-            return new ResponseVo("token解析失败",null,"0x501");
+            return JSONArray.toJSONString(new ResponseVo("token解析失败",null,"0x501"));
         }
 
-        Long judge = fileMapper.deleteFileOrFolder(deleteFileOrFolderBo);
+        Long judge = fileMapper.deleteFileOrFolder(serverFilename);
 
         if (judge == 0L || judge == null) {
-            return new ResponseVo("删除失败",null,"0x500");
+            return JSONArray.toJSONString(new ResponseVo("删除失败",null,"0x500"));
         }
 
-        return new ResponseVo("删除成功",null,"0x200");
+        return JSONArray.toJSONString(new ResponseVo("删除成功",null,"0x200"));
     }
 
     /**

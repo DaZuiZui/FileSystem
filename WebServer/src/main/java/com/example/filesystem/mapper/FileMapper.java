@@ -20,12 +20,11 @@ public interface FileMapper {
     List<File> findOwnFile(Long createBy);
 
     /**
-     * @author hln 2023-11-28
-     *      删除文件或文件夹
-     * @param deleteFileOrFolderBo
      * @return
+     * @author hln 2023-11-28
+     * 删除文件或文件夹
      */
-    Long deleteFileOrFolder(DeleteFileOrFolderBo deleteFileOrFolderBo);
+    Long deleteFileOrFolder(String serverFilename);
 
     /**
      * @author hln 2023-11-28

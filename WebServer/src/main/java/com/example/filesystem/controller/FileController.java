@@ -87,15 +87,30 @@ public class FileController {
         return fileService.findOwnFile(token.substring(6));
     }
 
+    /**
+     * @author hln 2023-12-05
+     *      删除文件或文件夹
+     * @param httpServletRequest
+     * @return
+     */
+    @RequestMapping(value = "/deleteFileOrFolder" , method = RequestMethod.POST)
+    @ApiOperation("删除文件或文件夹")
+    public String deleteFileOrFolder(HttpServletRequest httpServletRequest , @RequestParam("serverFilename") String serverFilename){
+
+        String token = httpServletRequest.getHeader("Cookie");
+
+        return fileService.deleteFileOrFolder(serverFilename,token.substring(6));
+    }
+
 //    /**
 //     * @author hln 2023-11-28
-//     *      显示自己的文件
-//     * @param findOwnFileBo
+//     *      删除文件或文件夹
+//     * @param deleteFileOrFolderBo
 //     * @return
 //     */
-//    @PostMapping("/findOwnFile")
-//    @ApiOperation("显示自己的文件")
-//    public String findOwnFile(@RequestBody FindOwnFileBo findOwnFileBo){
+//    @PostMapping("/deleteFileOrFolder")
+//    @ApiOperation("删除文件或文件夹")
+//    public String deleteFileOrFolder(@RequestBody DeleteFileOrFolderBo deleteFileOrFolderBo){
 //        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
 //        ThreadLocalUtil.mapThreadLocal.remove();
 //
@@ -103,27 +118,8 @@ public class FileController {
 //            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
 //        }
 //
-//        return JSONArray.toJSONString(fileService.findOwnFile(findOwnFileBo));
+//        return JSONArray.toJSONString(fileService.deleteFileOrFolder(deleteFileOrFolderBo));
 //    }
-
-    /**
-     * @author hln 2023-11-28
-     *      删除文件或文件夹
-     * @param deleteFileOrFolderBo
-     * @return
-     */
-    @PostMapping("/deleteFileOrFolder")
-    @ApiOperation("删除文件或文件夹")
-    public String deleteFileOrFolder(@RequestBody DeleteFileOrFolderBo deleteFileOrFolderBo){
-        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
-        ThreadLocalUtil.mapThreadLocal.remove();
-
-        if(map.get("error") != null){
-            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
-        }
-
-        return JSONArray.toJSONString(fileService.deleteFileOrFolder(deleteFileOrFolderBo));
-    }
 
     /**
      * @author hln 2023-11-28

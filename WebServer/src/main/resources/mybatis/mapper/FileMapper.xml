@@ -45,15 +45,15 @@
     </update>
 
     <!-- 删除文件或文件夹 -->
-    <delete id="deleteFileOrFolder" parameterType="java.lang.String">
+    <delete id="deleteFileOrFolder">
         delete
         from
             file
         where
             server_filename = #{serverFilename}
-          and
+        and
             del_flag = 0
-          and
+        and
             status = 0
     </delete>
 
@@ -65,6 +65,7 @@
             file
         where
             create_by = #{createBy}
+        limit 1
     </select>
 
     <!-- 查看修改文件的人 -->

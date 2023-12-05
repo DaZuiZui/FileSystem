@@ -2,32 +2,23 @@ package com.example.filesystem.service.impl;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.example.filesystem.mapper.FileMapper;
-import com.example.filesystem.pojo.FileDownLoad;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
 import com.example.filesystem.pojo.vo.UpdateFileOrFolderVo;
 import com.example.filesystem.service.FileService;
+import com.example.filesystem.service.SystemService;
 import com.example.filesystem.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -37,79 +28,84 @@ import static com.example.filesystem.util.JwtUtil.analysis;
 @Service
 public class FileServiceImpl implements FileService {
 
-
+    @Value("${filePath}")
+    private String path;
     @Value("${projecturl}")
     private String projecturl;
     @Autowired
     private FileMapper fileMapper;
+    @Autowired
+    private SystemService systemService;
 
     /**
-     * @author hln 2023-11-28
-     *      显示自己的文件
-     * @param findOwnFileBo
+     * @param token
      * @return
+     * @author hln 2023-12-05
+     * 显示自己的文件
      */
     @Override
-    public ResponseVo findOwnFile(FindOwnFileBo findOwnFileBo) {
+    public String findOwnFile(@RequestParam("token") String token) {
 
+        //确认登录状态
+        systemService.auth(token);
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
 
-        if (userId == null || userId == 0L) {
-            return new ResponseVo("token解析失败",null,"0x501");
+        if(userId == null || userId == 0L){
+            return JSONArray.toJSONString(new ResponseVo("token解析失败",null,"0x501"));
         }
 
-        com.example.filesystem.pojo.File file = fileMapper.findOwnFile(findOwnFileBo);
+        com.example.filesystem.pojo.File file = fileMapper.findOwnFile(userId);
 
         if (file == null){
-            return new ResponseVo("查询失败",null,"0x500");
+            return JSONArray.toJSONString(new ResponseVo("查询失败",null,"0x500"));
         }
 
-        return new ResponseVo("查询成功",file,"0x200");
+        return JSONArray.toJSONString(new ResponseVo("查询成功",file,"0x200"));
     }
 
-    /**
-     * @author hln 2023-11-29
-     *      下载文件功能
-     * @param downloadFileBo
-     * @return
-     */
-    @Override
-    public ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response) {
-        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
-        Long userId = Long.valueOf(userIdOfStr);
-
-        if (userId == null || userId == 0L) {
-            return new ResponseVo("token解析失败", null, "0x501");
-        }
-
-        // 获取file的path
-        String serverFilename = downloadFileBo.getServerFilename();
-        String filePath = fileMapper.selectToGetPathFile(serverFilename);
-
-        File file = new File(filePath);
-        try (InputStream inputStream = new FileInputStream(file);
-             OutputStream outputStream = response.getOutputStream()) {
-
-            response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
-            response.setContentType("application/octet-stream");
-
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-
-            response.flushBuffer();
-        } catch (IOException e) {
-            e.printStackTrace();
-            // 处理异常，返回适当的错误信息
-            return new ResponseVo("文件下载失败", null, "0x502");
-        }
-
-        return new ResponseVo("文件下载成功",null,"0x200");
-    }
-
+//    /**
+//     * @author hln 2023-11-29
+//     *      下载文件功能
+//     * @param downloadFileBo
+//     * @return
+//     */
+//    @Override
+//    public ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response) {
+//        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
+//        Long userId = Long.valueOf(userIdOfStr);
+//
+//        if (userId == null || userId == 0L) {
+//            return new ResponseVo("token解析失败", null, "0x501");
+//        }
+//
+//        // 获取file的path
+//        String serverFilename = downloadFileBo.getServerFilename();
+//        String filePath = fileMapper.selectToGetPathFile(serverFilename);
+//
+//        File file = new File(filePath);
+//        try (InputStream inputStream = new FileInputStream(file);
+//             OutputStream outputStream = response.getOutputStream()) {
+//
+//            response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+//            response.setContentType("application/octet-stream");
+//
+//            byte[] buffer = new byte[1024];
+//            int bytesRead;
+//            while ((bytesRead = inputStream.read(buffer)) != -1) {
+//                outputStream.write(buffer, 0, bytesRead);
+//            }
+//
+//            response.flushBuffer();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            // 处理异常，返回适当的错误信息
+//            return new ResponseVo("文件下载失败", null, "0x502");
+//        }
+//
+//        return new ResponseVo("文件下载成功",null,"0x200");
+//    }
+//
 
     /**
      * @author hln 2023-11-28
@@ -242,71 +238,6 @@ public class FileServiceImpl implements FileService {
 
     }
 
-    /**
-     * @author Oh...Yeah!!! 2023-11-13
-     *    文件下载
-     * @param
-     * @param
-     * @return String.class
-     */
-    @Override
-    public ResponseVo download(String reteFilePath, String loFilePath) {
-
-        String sourceFilePath = "reteFilePath"; //源文件路径
-        String targetFolderPath = "loFilePath"; //目标文件路径
-
-        try {
-
-            // 创建目标文件夹（如果不存在）
-            File targetFolder = new File(targetFolderPath);
-            if (!targetFolder.exists()) {
-                targetFolder.mkdir();
-            }
-
-            // 打开源文件和目标文件通道
-            FileInputStream sourceFileInputStream = new FileInputStream(sourceFilePath);
-            FileOutputStream targetFileOutputStream = new FileOutputStream(targetFolderPath + "/" + new File(sourceFilePath).getName());
-            FileChannel sourceFileChannel = sourceFileInputStream.getChannel();
-            FileChannel targetFileChannel = targetFileOutputStream.getChannel();
-
-            // 分配直接内存缓冲区
-            ByteBuffer buffer = ByteBuffer.allocateDirect(1024 * 1024);
-
-            // 从源文件通道读取数据，并写入目标文件通道
-            while (sourceFileChannel.read(buffer) != -1) {
-                buffer.flip();
-                targetFileChannel.write(buffer);
-                buffer.clear();
-            }
-
-            // 关闭通道和流
-            sourceFileChannel.close();
-            targetFileChannel.close();
-            sourceFileInputStream.close();
-            targetFileOutputStream.close();
-
-            FileDownLoad fd = new FileDownLoad();
-
-
-
-          //  fileMapper.addFileDownLoad();
-
-
-            return new ResponseVo<>("success",null,"0x200");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            return new ResponseVo<>("fail",null,"0x507");
-
-
-
-        }
-
-
-
-    }
-
 
     /**
      * @author Oh...Yeah!!! 2023-11-13
@@ -328,7 +259,7 @@ public class FileServiceImpl implements FileService {
         Map<String, Object> analysis = analysis(token);
         String id = (String) analysis.get("id");
 
-        File saveFilePath = new File("src//mian//java//resources//file//user//"+id+"/");
+        File saveFilePath = new File(path+""+id+"/");
         //判断是否存在文件夹，不存在就创建，但其实可以直接手动确定创建好，这样不用每次保存都检测
         if (!saveFilePath.exists()){
             saveFilePath.mkdirs();
@@ -336,17 +267,12 @@ public class FileServiceImpl implements FileService {
 
         String imgUrl = id+"/"+fileName;
 
-        File file1 = new File("src//main//resources//file/user//" + imgUrl);
-
-
-        file.transferTo(new File(file1.getCanonicalPath()));
+        file.transferTo(new File(path+imgUrl));
 
         long userId = Long.parseLong(id);
 
-        String severPath = projecturl+"/system/getfile?fileUrl="+id+"/"+fileName;
-
         com.example.filesystem.pojo.File newFile = new com.example.filesystem.pojo.File(
-                severPath,"/" + fileName,
+                path+""+id+"/"+ fileName,"/" + fileName,
                 file.getSize(),0,0,
                 suffixName,userId,new Date(),
                 userId,new Date(),0,0
@@ -355,7 +281,7 @@ public class FileServiceImpl implements FileService {
         fileMapper.addFile(newFile);
 
 
-        return JSONArray.toJSONString(new ResponseVo<>("success",severPath,"0x200"));
+        return JSONArray.toJSONString(new ResponseVo<>("success",projecturl+"/system/getfile?fileUrl="+id+"/"+fileName,"0x200"));
     }
 
 

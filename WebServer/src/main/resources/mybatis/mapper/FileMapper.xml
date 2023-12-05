@@ -65,7 +65,6 @@
             file
         where
             create_by = #{createBy}
-        limit 1
     </select>
 
     <!-- 查看修改文件的人 -->

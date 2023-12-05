@@ -12,10 +12,10 @@ public interface FileMapper {
     /**
      * @author hln 2023-11-28
      *      显示自己的文件
-     * @param findOwnFileBo
+     * @param createBy
      * @return
      */
-    File findOwnFile(FindOwnFileBo findOwnFileBo);
+    File findOwnFile(Long createBy);
 
     /**
      * @author hln 2023-11-28

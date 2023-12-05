@@ -289,7 +289,7 @@ public class FileServiceImpl implements FileService {
         Map<String, Object> analysis = analysis(token);
         String id = (String) analysis.get("id");
 
-        File saveFilePath = new File(path+""+id+"/");
+        File saveFilePath = new File("src//mian//java//resources//file//user//"+id+"/");
         //判断是否存在文件夹，不存在就创建，但其实可以直接手动确定创建好，这样不用每次保存都检测
         if (!saveFilePath.exists()){
             saveFilePath.mkdirs();
@@ -297,7 +297,10 @@ public class FileServiceImpl implements FileService {
 
         String imgUrl = id+"/"+fileName;
 
-        file.transferTo(new File(path+imgUrl));
+        File file1 = new File("src//main//resources//file/user//" + imgUrl);
+
+
+        file.transferTo(new File(file1.getCanonicalPath()));
 
         long userId = Long.parseLong(id);
 

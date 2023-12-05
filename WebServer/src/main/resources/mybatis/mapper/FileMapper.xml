@@ -45,15 +45,15 @@
     </update>
 
     <!-- 删除文件或文件夹 -->
-    <delete id="deleteFileOrFolder">
+    <delete id="deleteFileOrFolder" parameterType="java.lang.String">
         delete
         from
             file
         where
             server_filename = #{serverFilename}
-        and
+          and
             del_flag = 0
-        and
+          and
             status = 0
     </delete>
 
@@ -65,7 +65,6 @@
             file
         where
             create_by = #{createBy}
-        limit 1
     </select>
 
     <!-- 查看修改文件的人 -->
@@ -74,12 +73,12 @@
             t1.name,t2.update_time
         from
             user t1
-        inner join
+                inner join
             file t2
-        on
-            t2.server_filename = #{serverFilename}
-        and
-            t2.create_by = t1.id
+            on
+                        t2.server_filename = #{serverFilename}
+                    and
+                        t2.create_by = t1.id
     </select>
 
     <!-- 获取file的Path -->

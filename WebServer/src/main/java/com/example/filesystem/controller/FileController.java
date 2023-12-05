@@ -14,6 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,25 +31,34 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    /**
-     * @author Oh...Yeah!!! 2023-11-13
-     *    文件下载
-     * @param
-     * @param
-     * @return String.class
-     */
-    @ApiOperation("文件下载")
-    @RequestMapping(value = "downloadfile",method = {RequestMethod.POST})
-    public ResponseVo upload(@RequestParam  String reteFilePath ,@RequestParam String loFilePath) throws Exception {
 
-        //此处传入文件的绝对路径
-        return fileService.download(reteFilePath,loFilePath);
-    }
+//    @ApiOperation("文件从服务器下载")
+//    @RequestMapping(value = "downloadfile",method = {RequestMethod.POST})
+//    public void upload(HttpServletRequest httpServletRequest,@RequestParam  String reteFilePath ,@RequestParam String loFilePath ) throws Exception {
+//
+//        //此处传入文件的绝对路径
+//        FtpUtils.download(reteFilePath,loFilePath);
+//
+//    }
+//
+//    /**
+//     * @author Oh...Yeah!!! 2023-11-13
+//     *    文件上传到服务器
+//     * @param
+//     * @param file
+//     * @return String.class
+//     */
+//    @ApiOperation("文件上传到服务器")
+//    @RequestMapping(value = "file",method = {RequestMethod.POST})
+//    public void upload(HttpServletRequest httpServletRequest,@RequestParam("file")  MultipartFile file) throws Exception {
+//        byte[] bytes = file.getBytes();
+//        FtpUtils.sshSftp(bytes,file.getOriginalFilename());
+//
+//    }
 
     /**
      * @author Oh...Yeah!!! 2023-11-13
      *    文件本地上传
-     * @param
      * @param file
      * @return String.class
      */
@@ -63,44 +73,33 @@ public class FileController {
 
     }
 
-
-
     /**
-     * @author hln 2023-11-28
+     * @author hln 2023-12-05
      *      显示自己的文件
-     * @param findOwnFileBo
      * @return
      */
-    @PostMapping("/findOwnFile")
+    @RequestMapping(value = "/findOwnFile" , method = RequestMethod.POST)
     @ApiOperation("显示自己的文件")
-    public String findOwnFile(@RequestBody FindOwnFileBo findOwnFileBo){
-        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
-        ThreadLocalUtil.mapThreadLocal.remove();
+    public String findOwnFile(HttpServletRequest httpServletRequest){
 
-        if(map.get("error") != null){
-            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
-        }
+        String token = httpServletRequest.getHeader("Cookie");
 
-        return JSONArray.toJSONString(fileService.findOwnFile(findOwnFileBo));
+        return fileService.findOwnFile(token.substring(6));
     }
 
     /**
-     * @author hln 2023-11-28
+     * @author hln 2023-12-05
      *      删除文件或文件夹
-     * @param deleteFileOrFolderBo
+     * @param httpServletRequest
      * @return
      */
-    @PostMapping("/deleteFileOrFolder")
+    @RequestMapping(value = "/deleteFileOrFolder" , method = RequestMethod.POST)
     @ApiOperation("删除文件或文件夹")
-    public String deleteFileOrFolder(@RequestBody DeleteFileOrFolderBo deleteFileOrFolderBo){
-        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
-        ThreadLocalUtil.mapThreadLocal.remove();
+    public String deleteFileOrFolder(HttpServletRequest httpServletRequest , @RequestParam("serverFilename") String serverFilename){
 
-        if(map.get("error") != null){
-            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
-        }
+        String token = httpServletRequest.getHeader("Cookie");
 
-        return JSONArray.toJSONString(fileService.deleteFileOrFolder(deleteFileOrFolderBo));
+        return fileService.deleteFileOrFolder(serverFilename,token.substring(6));
     }
 
     /**

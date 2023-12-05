@@ -5,26 +5,26 @@ import com.example.filesystem.pojo.vo.ResponseVo;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface FileService {
 
     /**
-     * @author hln 2023-11-28
-     *      显示自己的文件
-     * @param findOwnFileBo
+     * @param substring
      * @return
+     * @author hln 2023-11-28
+     * 显示自己的文件
      */
-    ResponseVo findOwnFile(FindOwnFileBo findOwnFileBo);
+    String findOwnFile(String substring);
 
     /**
-     * @author hln 2023-11-28
-     *      删除文件或文件夹
-     * @param deleteFileOrFolderBo
+     * @param serverFilename
+     * @param substring
      * @return
+     * @author hln 2023-11-28
+     * 删除文件或文件夹
      */
-    ResponseVo deleteFileOrFolder(DeleteFileOrFolderBo deleteFileOrFolderBo);
+    String deleteFileOrFolder(String serverFilename, String substring);
 
     /**
      * @author Oh...Yeah!!! 2023-11-13
@@ -72,12 +72,12 @@ public interface FileService {
     String updateFileOrFolder(String serverFilename, String updateName, String token);
 
 
-    /**
-     * @author Oh...Yeah!!! 2023-11-13
-     *    文件下载
-     * @param
-     * @param
-     * @return String.class
-     */
-    public ResponseVo download(String reteFilePath, String loFilePath);
+//    /**
+//     * @author Oh...Yeah!!! 2023-11-13
+//     *    文件下载
+//     * @param
+//     * @param
+//     * @return String.class
+//     */
+//    public ResponseVo download(String reteFilePath, String loFilePath);
 }

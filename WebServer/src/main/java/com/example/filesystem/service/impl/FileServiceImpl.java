@@ -45,7 +45,8 @@ public class FileServiceImpl implements FileService {
      * 显示自己的文件
      */
     @Override
-    public String findOwnFile(@RequestParam("token") String token) {
+//    public String findOwnFile(@RequestParam("token") String token) {
+    public String findOwnFile(String token) {
 
         //确认登录状态
         systemService.auth(token);

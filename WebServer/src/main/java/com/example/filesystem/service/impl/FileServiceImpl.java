@@ -37,8 +37,7 @@ import static com.example.filesystem.util.JwtUtil.analysis;
 @Service
 public class FileServiceImpl implements FileService {
 
-    @Value("${filePath}")
-    private String path;
+
     @Value("${projecturl}")
     private String projecturl;
     @Autowired

@@ -20,6 +20,7 @@ import java.io.IOException;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -28,7 +29,7 @@ import static com.example.filesystem.util.JwtUtil.analysis;
 @Service
 public class FileServiceImpl implements FileService {
 
-    @Value("${filePath}")
+//    @Value("${filePath}")
     private String path;
     @Value("${projecturl}")
     private String projecturl;
@@ -55,57 +56,11 @@ public class FileServiceImpl implements FileService {
             return JSONArray.toJSONString(new ResponseVo("token解析失败",null,"0x501"));
         }
 
-        com.example.filesystem.pojo.File file = fileMapper.findOwnFile(userId);
-
-        if (file == null){
-            return JSONArray.toJSONString(new ResponseVo("查询失败",null,"0x500"));
-        }
+        List<com.example.filesystem.pojo.File> file = fileMapper.findOwnFile(userId);
 
         return JSONArray.toJSONString(new ResponseVo("查询成功",file,"0x200"));
     }
 
-//    /**
-//     * @author hln 2023-11-29
-//     *      下载文件功能
-//     * @param downloadFileBo
-//     * @return
-//     */
-//    @Override
-//    public ResponseVo downloadFile(DownloadFileBo downloadFileBo, HttpServletResponse response) {
-//        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
-//        Long userId = Long.valueOf(userIdOfStr);
-//
-//        if (userId == null || userId == 0L) {
-//            return new ResponseVo("token解析失败", null, "0x501");
-//        }
-//
-//        // 获取file的path
-//        String serverFilename = downloadFileBo.getServerFilename();
-//        String filePath = fileMapper.selectToGetPathFile(serverFilename);
-//
-//        File file = new File(filePath);
-//        try (InputStream inputStream = new FileInputStream(file);
-//             OutputStream outputStream = response.getOutputStream()) {
-//
-//            response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
-//            response.setContentType("application/octet-stream");
-//
-//            byte[] buffer = new byte[1024];
-//            int bytesRead;
-//            while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                outputStream.write(buffer, 0, bytesRead);
-//            }
-//
-//            response.flushBuffer();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            // 处理异常，返回适当的错误信息
-//            return new ResponseVo("文件下载失败", null, "0x502");
-//        }
-//
-//        return new ResponseVo("文件下载成功",null,"0x200");
-//    }
-//
 
     /**
      * @author hln 2023-11-28

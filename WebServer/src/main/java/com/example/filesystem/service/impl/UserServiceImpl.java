@@ -7,6 +7,7 @@ import com.example.filesystem.pojo.vo.FindAllNewVo;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.pojo.vo.UserFindAllVo;
 import com.example.filesystem.pojo.vo.UserPagingToGetDataVo;
+import com.example.filesystem.service.SystemService;
 import com.example.filesystem.service.UserService;
 import com.example.filesystem.util.JwtUtil;
 import com.example.filesystem.util.ThreadLocalUtil;
@@ -22,7 +23,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
-
+    @Autowired
+    private SystemService systemService;
     /**
      * @author zhuxinyu 2023-11-28
      *      用户登录验证
@@ -62,11 +64,13 @@ public class UserServiceImpl implements UserService {
     /**
      * @author zhuxinyu 2023-11-28
      *      用户删除
-     * @param userDeleteBo
+     * @param id
      * @return
      */
     @Override
-    public ResponseVo userDelete(UserDeleteBo userDeleteBo, String token) throws IOException {
+    public ResponseVo userDelete(Long id, String token){
+
+        systemService.isAdmin(token,1);
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
 
@@ -74,7 +78,7 @@ public class UserServiceImpl implements UserService {
             return new ResponseVo("token解析失败",null,"0x501");
         }
 
-        Long aLong = userMapper.userDelete(userDeleteBo.getId());
+        Long aLong = userMapper.userDelete(id);
 
         if(aLong == null || aLong.longValue() == 0L){
             return new ResponseVo("删除失败",null,"0x500");
@@ -87,19 +91,18 @@ public class UserServiceImpl implements UserService {
     /**
      * @author zhuxinyu 2023-11-28
      *     用户查询
-     * @param userSelectBo
+     * @param id
      * @return
      */
     @Override
-    public ResponseVo userSelect(UserSelectBo userSelectBo) {
+    public ResponseVo userSelect(Long id , String token) {
+        systemService.isAdmin(token,1);
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
-
         if(userId == null || userId == 0L){
             return new ResponseVo("token解析失败",null,"0x501");
         }
-
-        User user = userMapper.userSelect(userSelectBo.getId());
+        User user = userMapper.userSelect(id);
 
         if(user == null){
             return new ResponseVo("查询条件不存在",null,"0x500");
@@ -112,21 +115,19 @@ public class UserServiceImpl implements UserService {
     /**
      * @author zhuxinyu 2023-11-28
      *     用户更新
-     * @param userUpdateBo
+     * @param user
      * @return
      */
     @Override
-    public ResponseVo userUpdate(UserUpdateBo userUpdateBo) {
+    public ResponseVo userUpdate(User user) {
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
 
         if(userId == null || userId == 0L){
             return new ResponseVo("token解析失败",null,"0x501");
         }
-
-        userUpdateBo.getUser().setUpdateBy(userId);
-        userUpdateBo.getUser().setUpdateTime(new Date());
-        User user = userUpdateBo.getUser();
+        user.setUpdateBy(userId);
+        user.setUpdateTime(new Date());
         Long aLong = userMapper.userUpdate(user);
 
         if(aLong == null || aLong.longValue() == 0L){
@@ -166,6 +167,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public ResponseVo userFindAll() {
+
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
 
@@ -184,7 +186,9 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public ResponseVo findAllUser(UserFindAllBo userFindAllBo) {
+    public ResponseVo findAllUser(UserFindAllBo userFindAllBo,String token) {
+        //登录权限判定
+        systemService.isAdmin(token,1);
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
 

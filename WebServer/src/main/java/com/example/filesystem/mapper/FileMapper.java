@@ -27,12 +27,12 @@ public interface FileMapper {
     Long deleteFileOrFolder(String serverFilename);
 
     /**
-     * @author hln 2023-11-28
-     *      查看修改文件的人
-     * @param selectUpdateByToFileBo
+     * @param serverFilename
      * @return
+     * @author hln 2023-11-28
+     * 查看修改文件的人
      */
-    SelectUpdateByToFileVo selectUpdateByToFile(SelectUpdateByToFileBo selectUpdateByToFileBo);
+    List<SelectUpdateByToFileVo> selectUpdateByToFile(String serverFilename);
 
     /**
      * @param updateFileOrFolderBo
@@ -76,10 +76,10 @@ public interface FileMapper {
     Long moveFileOrFolder(MoveFileOrFolderBo moveFileOrFolderBo);
 
     /**
-     * @author hln 2023-11-28
+     * @author hln 2023-12-05
      *      重命名文件或文件夹
-     * @param updateFileOrFolderVo
-     * @return
+     * @param serverFilename
+     * @param updateName
      */
-    Long updateFileOrFolder(UpdateFileOrFolderVo updateFileOrFolderVo);
+    void updateFileOrFolder(String serverFilename, String updateName);
 }

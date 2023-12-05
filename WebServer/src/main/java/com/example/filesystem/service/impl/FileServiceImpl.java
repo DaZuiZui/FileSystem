@@ -92,63 +92,51 @@ public class FileServiceImpl implements FileService {
     }
 
     /**
-     * @author hln 2023-11-28
+     * @author hln 2023-12-05
      *      查看修改文件的人
-     * @param selectUpdateByToFileBo
+     * @param serverFilename
+     * @param token
      * @return
      */
     @Override
-    public ResponseVo selectUpdateByToFile(SelectUpdateByToFileBo selectUpdateByToFileBo) {
+    public String selectUpdateByToFile(String serverFilename, String token) {
 
-        String userIdOfStr= (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
-        Long userId = Long.valueOf(userIdOfStr);
-
-        if(userId == null || userId == 0L){
-            return new ResponseVo("token解析失败",null,"0x501");
-        }
-
-        SelectUpdateByToFileVo selectUpdateByToFileVo = fileMapper.selectUpdateByToFile(selectUpdateByToFileBo);
-
-        if (selectUpdateByToFileVo == null) {
-            return new ResponseVo("查询失败",null,"0x500");
-        }
-
-        return new ResponseVo("查询成功",selectUpdateByToFileVo,"0x200");
-    }
-
-    /**
-     * @author hln 2023-11-28
-     *      重命名文件或文件夹
-     * @param updateFileOrFolderBo
-     * @return
-     */
-    @Override
-    public ResponseVo updateFileOrFolder(UpdateFileOrFolderBo updateFileOrFolderBo) {
-
+        systemService.auth(token);
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
 
         if (userId == null || userId == 0L) {
-            return new ResponseVo("token解析失败",null,"0x501");
+            return JSONArray.toJSONString(new ResponseVo("token解析失败",null,"0x501"));
         }
 
-        UpdateFileOrFolderVo updateFileOrFolderVo = new UpdateFileOrFolderVo();
+        List<SelectUpdateByToFileVo> list = fileMapper.selectUpdateByToFile(serverFilename);
 
-        String name = updateFileOrFolderBo.getServerFilename();
-        String updateAfterName = name.substring(0,name.lastIndexOf("/") + 1) + updateFileOrFolderBo.getUpdateName();
-
-        updateFileOrFolderVo.setServerFilename(updateFileOrFolderBo.getServerFilename());
-        updateFileOrFolderVo.setLastName(updateAfterName);
-
-        Long judge = fileMapper.updateFileOrFolder(updateFileOrFolderVo);
-
-        if (judge == 0L || judge == null) {
-            return new ResponseVo("修改失败",null,"0x500");
-        }
-
-        return new ResponseVo("修改成功",null,"0x200");
+        return JSONArray.toJSONString(new ResponseVo("删除成功",list,"0x200"));
     }
 
+    /**
+     * @author hln 2023-12-05
+     *      重命名文件或文件夹
+     * @param serverFilename
+     * @param updateName
+     * @param token
+     * @return
+     */
+    @Override
+    public String updateFileOrFolder(String serverFilename, String updateName, String token) {
+
+        systemService.auth(token);
+        String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
+        Long userId = Long.valueOf(userIdOfStr);
+
+        if (userId == null || userId == 0L) {
+            return JSONArray.toJSONString(new ResponseVo("token解析失败",null,"0x501"));
+        }
+
+        fileMapper.updateFileOrFolder(serverFilename,updateName);
+
+        return JSONArray.toJSONString(new ResponseVo<>("修改成功",null,"0x200"));
+    }
 
     /**
      * @author zzy 2023-11-30

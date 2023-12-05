@@ -102,61 +102,34 @@ public class FileController {
         return fileService.deleteFileOrFolder(serverFilename,token.substring(6));
     }
 
-//    /**
-//     * @author hln 2023-11-28
-//     *      删除文件或文件夹
-//     * @param deleteFileOrFolderBo
-//     * @return
-//     */
-//    @PostMapping("/deleteFileOrFolder")
-//    @ApiOperation("删除文件或文件夹")
-//    public String deleteFileOrFolder(@RequestBody DeleteFileOrFolderBo deleteFileOrFolderBo){
-//        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
-//        ThreadLocalUtil.mapThreadLocal.remove();
-//
-//        if(map.get("error") != null){
-//            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
-//        }
-//
-//        return JSONArray.toJSONString(fileService.deleteFileOrFolder(deleteFileOrFolderBo));
-//    }
-
     /**
-     * @author hln 2023-11-28
+     * @author hln 2023-12-05
      *      查看修改文件的人
-     * @param selectUpdateByToFileBo
+     * @param httpServletRequest
      * @return
      */
-    @PostMapping("/selectUpdateByToFile")
+    @RequestMapping(value = "/selectUpdateByToFile" , method = RequestMethod.POST)
     @ApiOperation("查看修改文件的人")
-    public String selectUpdateByToFile(@RequestBody SelectUpdateByToFileBo selectUpdateByToFileBo){
-        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
-        ThreadLocalUtil.mapThreadLocal.remove();
+    public String selectUpdateByToFile(HttpServletRequest httpServletRequest,@RequestParam("serverFilename") String serverFilename){
 
-        if(map.get("error") != null){
-            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
-        }
+        String token = httpServletRequest.getHeader("Cookie");
 
-        return JSONArray.toJSONString(fileService.selectUpdateByToFile(selectUpdateByToFileBo));
+        return fileService.selectUpdateByToFile(serverFilename,token.substring(6));
     }
 
     /**
-     * @author hln 2023-11-28
+     * @author hln 2023-12-05
      *      重命名文件或文件夹
-     * @param updateFileOrFolderBo
+     * @param httpServletRequest
      * @return
      */
-    @PostMapping("/updateFileOrFolder")
+    @RequestMapping(value = "/updateFileOrFolder" , method = RequestMethod.POST)
     @ApiOperation("重命名文件或文件夹")
-    public String updateFileOrFolder(@RequestBody UpdateFileOrFolderBo updateFileOrFolderBo){
-        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
-        ThreadLocalUtil.mapThreadLocal.remove();
+    public String updateFileOrFolder(HttpServletRequest httpServletRequest,@RequestParam("serverFilename") String serverFilename,@RequestParam("updateName") String updateName){
 
-        if (map.get("error") != null) {
-            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
-        }
+        String token = httpServletRequest.getHeader("Cookie");
 
-        return JSONArray.toJSONString(fileService.updateFileOrFolder(updateFileOrFolderBo));
+        return fileService.updateFileOrFolder(serverFilename,updateName,token.substring(6));
     }
 
 

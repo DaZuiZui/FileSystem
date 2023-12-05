@@ -76,7 +76,7 @@
         inner join
             file t2
         on
-            t2.server_filename = (select server_filename from file where server_filename = #{serverFilename})
+            t2.server_filename = #{serverFilename}
         and
             t2.create_by = t1.id
     </select>

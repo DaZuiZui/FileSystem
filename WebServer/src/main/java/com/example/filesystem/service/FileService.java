@@ -27,23 +27,6 @@ public interface FileService {
     String deleteFileOrFolder(String serverFilename, String substring);
 
     /**
-     * @author hln 2023-11-28
-     *      查看修改文件的人
-     * @param selectUpdateByToFileBo
-     * @return
-     */
-    ResponseVo selectUpdateByToFile(SelectUpdateByToFileBo selectUpdateByToFileBo);
-
-    /**
-     * @author hln 2023-11-28
-     *      重命名文件或文件夹
-     * @param updateFileOrFolderBo
-     * @return
-     */
-    ResponseVo updateFileOrFolder(UpdateFileOrFolderBo updateFileOrFolderBo);
-
-
-    /**
      * @author Oh...Yeah!!! 2023-11-13
      *    文件上传
      * @param token
@@ -68,6 +51,25 @@ public interface FileService {
      * @return
      */
     ResponseVo moveFileOrFolder(MoveFileOrFolderBo moveFileOrFolderBo);
+
+    /**
+     * @author hln 2023-12-05
+     *      查看修改文件的人
+     * @param serverFilename
+     * @param token
+     * @return
+     */
+    String selectUpdateByToFile(String serverFilename, String token);
+
+    /**
+     * @author hln 2023-12-05
+     *      重命名文件或文件夹
+     * @param serverFilename
+     * @param updateName
+     * @param token
+     * @return
+     */
+    String updateFileOrFolder(String serverFilename, String updateName, String token);
 
 
 //    /**

@@ -4,13 +4,13 @@ import com.alibaba.fastjson2.JSONArray;
 import com.example.filesystem.pojo.User;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
+import com.example.filesystem.service.SystemService;
 import com.example.filesystem.service.UserService;
 import com.example.filesystem.util.ThreadLocalUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -23,7 +23,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private SystemService systemService;
     /**
      * @author zhuxinyu 2023-11-28
      *   用户登录
@@ -41,56 +42,48 @@ public class UserController {
     }
 
     /**
-     * @author zhuxinyu 2023-11-28
-     *     根据用户id删除
-     * @param userDeleteBo
+     * @param id
      * @return
+     * @author zhuxinyu 2023-11-28
+     * 根据用户id删除
      */
     @PostMapping("/delete")
     @ApiOperation("删除用户通过id")
-    public String userDelete(HttpServletRequest httpServletRequest,@RequestBody UserDeleteBo userDeleteBo) throws IOException {
-        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
-        ThreadLocalUtil.mapThreadLocal.remove();
-        if ( map.get("error") != null) {
-            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
-        }
+    public String userDelete(HttpServletRequest httpServletRequest, @RequestParam("id") Long id) throws IOException {
+
         String token = httpServletRequest.getHeader("Cookie");
-        return JSONArray.toJSONString(userService.userDelete(userDeleteBo,token.substring(6)));
+        return JSONArray.toJSONString(userService.userDelete(id,token.substring(6)));
     }
 
     /**
-     * @author zhuxinyu 2023-11-28
-     *      根据用户id查询
-     * @param userSelectBo
+     * @param id
      * @return
+     * @author zhuxinyu 2023-11-28
+     * 根据用户id查询
      */
     @PostMapping("/select")
     @ApiOperation("查询用户通过id")
-    public String userSelect(@RequestBody UserSelectBo userSelectBo){
-        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
-        ThreadLocalUtil.mapThreadLocal.remove();
-        if ( map.get("error") != null) {
-            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
-        }
+    public String userSelect(HttpServletRequest httpServletRequest, @RequestParam Long id) throws IOException{
+        String token = httpServletRequest.getHeader("Cookie");
 
-        return JSONArray.toJSONString(userService.userSelect(userSelectBo));
+        return JSONArray.toJSONString(userService.userSelect(id,token.substring(6)));
     }
 
     /**
      * @author zhuxinyu 2023-11-28
      *      根据用户id修改
-     * @param userUpdateBo
+     * @param user
      * @return
      */
     @PostMapping("/update")
     @ApiOperation("修改用户通过id")
-    public String userUpdate(@RequestBody UserUpdateBo userUpdateBo){
+    public String userUpdate(@RequestBody User user){
         Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
         ThreadLocalUtil.mapThreadLocal.remove();
         if ( map.get("error") != null) {
             return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
         }
-        return JSONArray.toJSONString(userService.userUpdate(userUpdateBo));
+        return JSONArray.toJSONString(userService.userUpdate(user));
     }
 
     /**
@@ -109,21 +102,18 @@ public class UserController {
     }
 
     /**
-     * @author zhuxinyu 2023-12-01
-     *      查询所有的分页查询，模糊查询
      * @param userFindAllBo
      * @return
+     * @author zhuxinyu 2023-12-01
+     * 查询所有的分页查询，模糊查询
      */
     @PostMapping("/userFindAll")
     @ApiOperation("返回所有用户的基础信息")
-    public String findAllUser(@RequestBody UserFindAllBo userFindAllBo){
-        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
-        ThreadLocalUtil.mapThreadLocal.remove();
-        if ( map.get("error") != null) {
-            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
-        }
+    public String findAllUser(HttpServletRequest httpServletRequest , @RequestBody UserFindAllBo userFindAllBo)throws IOException{
 
-        return JSONArray.toJSONString(userService.findAllUser(userFindAllBo));
+        String token = httpServletRequest.getHeader("Cookie");
+
+        return JSONArray.toJSONString(userService.findAllUser(userFindAllBo,token.substring(6)));
     }
 
     /**

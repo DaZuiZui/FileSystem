@@ -6,24 +6,25 @@ import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
 import com.example.filesystem.pojo.vo.UpdateFileOrFolderVo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface FileMapper {
 
     /**
-     * @author hln 2023-11-28
-     *      显示自己的文件
-     * @param findOwnFileBo
+     * @param createBy
      * @return
+     * @author hln 2023-11-28
+     * 显示自己的文件
      */
-    File findOwnFile(FindOwnFileBo findOwnFileBo);
+    List<File> findOwnFile(Long createBy);
 
     /**
-     * @author hln 2023-11-28
-     *      删除文件或文件夹
-     * @param deleteFileOrFolderBo
      * @return
+     * @author hln 2023-11-28
+     * 删除文件或文件夹
      */
-    Long deleteFileOrFolder(DeleteFileOrFolderBo deleteFileOrFolderBo);
+    Long deleteFileOrFolder(String serverFilename);
 
     /**
      * @author hln 2023-11-28

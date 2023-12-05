@@ -4,7 +4,6 @@ package com.example.filesystem.pojo.bo;
 import java.io.Serializable;
 
 public class UserFindAllBo implements Serializable {
-    private String token;
     private String username;//用户账号
     private String name;//用户名
     private Long grade;//年级
@@ -16,22 +15,13 @@ public class UserFindAllBo implements Serializable {
 
     }
 
-    public UserFindAllBo(String token, String username, String name, Long grade, String org, Integer start, Integer size) {
-        this.token = token;
+    public UserFindAllBo(String username, String name, Long grade, String org, Integer start, Integer size) {
         this.username = username;
         this.name = name;
         this.grade = grade;
         this.org = org;
         this.start = start;
         this.size = size;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getUsername() {
@@ -85,8 +75,7 @@ public class UserFindAllBo implements Serializable {
     @Override
     public String toString() {
         return "UserFindAllBo{" +
-                "token='" + token + '\'' +
-                ", username='" + username + '\'' +
+                "username='" + username + '\'' +
                 ", name='" + name + '\'' +
                 ", grade=" + grade +
                 ", org='" + org + '\'' +

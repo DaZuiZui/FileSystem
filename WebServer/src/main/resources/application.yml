@@ -13,29 +13,8 @@ spring:
 server:
   port: 8010
 
-# 选择api项目下的resouces路径下的user文件夹
-filePath: "D:/Desktop/FileSystem/FileSystem/WebServer/src/main/resources/file/user/"
-
 # 本地路径
 projecturl: "http://127.0.0.1:8010"
-
-# 本地文件的存储路径
-absoluteFilePath: "D:/Desktop/FileSystem/FileSystem/WebServer/src/main/resources/file/user/"
-
-# 服务器路径
-serverUrl: "http://192.168.88.130"
-
-#服务器目标文件路径
-targetFile: "/home/hac/Desktop/hahaha/test2.txt"
-
-#下载文件到本地的路径
-saveDir: "D:/Desktop/FileSystem/FileSystem/WebServer/src/main/resources/file/user/1/"
-
-#服务器目标文件路径
-targetFileDir: "/home/hac/Desktop/hahaha/"
-
-
-
 
 
 

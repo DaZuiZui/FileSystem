@@ -99,7 +99,7 @@
             user t1
         limit 0,15
     </select>
-    <!--查询所有用户的基础信息-->
+    <!--查询所有的分页查询，模糊查询-->
     <select id="findAllUser" resultType="com.example.filesystem.pojo.vo.UserFindAllVo"
             parameterType="com.example.filesystem.pojo.bo.UserFindAllBo" >
         select
@@ -135,7 +135,7 @@
         <if test="name != null">
             name like concat('%',#{name},'%') and
         </if>
-        <if test="grade != null">
+        <if test="grade != 0">
             grade like concat('%',#{grade},'%') and
         </if>
         <if test="org != null">

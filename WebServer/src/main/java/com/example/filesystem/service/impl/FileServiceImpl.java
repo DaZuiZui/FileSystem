@@ -2,6 +2,7 @@ package com.example.filesystem.service.impl;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.example.filesystem.mapper.FileMapper;
+import com.example.filesystem.pojo.FileDownLoad;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
@@ -25,6 +26,8 @@ import java.net.URL;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -34,8 +37,7 @@ import static com.example.filesystem.util.JwtUtil.analysis;
 @Service
 public class FileServiceImpl implements FileService {
 
-    @Value("${filePath}")
-    private String path;
+
     @Value("${projecturl}")
     private String projecturl;
     @Autowired
@@ -240,6 +242,71 @@ public class FileServiceImpl implements FileService {
 
     }
 
+    /**
+     * @author Oh...Yeah!!! 2023-11-13
+     *    文件下载
+     * @param
+     * @param
+     * @return String.class
+     */
+    @Override
+    public ResponseVo download(String reteFilePath, String loFilePath) {
+
+        String sourceFilePath = "reteFilePath"; //源文件路径
+        String targetFolderPath = "loFilePath"; //目标文件路径
+
+        try {
+
+            // 创建目标文件夹（如果不存在）
+            File targetFolder = new File(targetFolderPath);
+            if (!targetFolder.exists()) {
+                targetFolder.mkdir();
+            }
+
+            // 打开源文件和目标文件通道
+            FileInputStream sourceFileInputStream = new FileInputStream(sourceFilePath);
+            FileOutputStream targetFileOutputStream = new FileOutputStream(targetFolderPath + "/" + new File(sourceFilePath).getName());
+            FileChannel sourceFileChannel = sourceFileInputStream.getChannel();
+            FileChannel targetFileChannel = targetFileOutputStream.getChannel();
+
+            // 分配直接内存缓冲区
+            ByteBuffer buffer = ByteBuffer.allocateDirect(1024 * 1024);
+
+            // 从源文件通道读取数据，并写入目标文件通道
+            while (sourceFileChannel.read(buffer) != -1) {
+                buffer.flip();
+                targetFileChannel.write(buffer);
+                buffer.clear();
+            }
+
+            // 关闭通道和流
+            sourceFileChannel.close();
+            targetFileChannel.close();
+            sourceFileInputStream.close();
+            targetFileOutputStream.close();
+
+            FileDownLoad fd = new FileDownLoad();
+
+
+
+          //  fileMapper.addFileDownLoad();
+
+
+            return new ResponseVo<>("success",null,"0x200");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ResponseVo<>("fail",null,"0x507");
+
+
+
+        }
+
+
+
+    }
+
 
     /**
      * @author Oh...Yeah!!! 2023-11-13
@@ -261,7 +328,7 @@ public class FileServiceImpl implements FileService {
         Map<String, Object> analysis = analysis(token);
         String id = (String) analysis.get("id");
 
-        File saveFilePath = new File(path+""+id+"/");
+        File saveFilePath = new File("src//mian//java//resources//file//user//"+id+"/");
         //判断是否存在文件夹，不存在就创建，但其实可以直接手动确定创建好，这样不用每次保存都检测
         if (!saveFilePath.exists()){
             saveFilePath.mkdirs();
@@ -269,12 +336,17 @@ public class FileServiceImpl implements FileService {
 
         String imgUrl = id+"/"+fileName;
 
-        file.transferTo(new File(path+imgUrl));
+        File file1 = new File("src//main//resources//file/user//" + imgUrl);
+
+
+        file.transferTo(new File(file1.getCanonicalPath()));
 
         long userId = Long.parseLong(id);
 
+        String severPath = projecturl+"/system/getfile?fileUrl="+id+"/"+fileName;
+
         com.example.filesystem.pojo.File newFile = new com.example.filesystem.pojo.File(
-                path+""+id+"/"+ fileName,"/" + fileName,
+                severPath,"/" + fileName,
                 file.getSize(),0,0,
                 suffixName,userId,new Date(),
                 userId,new Date(),0,0
@@ -283,7 +355,7 @@ public class FileServiceImpl implements FileService {
         fileMapper.addFile(newFile);
 
 
-        return JSONArray.toJSONString(new ResponseVo<>("success",projecturl+"/system/getfile?fileUrl="+id+"/"+fileName,"0x200"));
+        return JSONArray.toJSONString(new ResponseVo<>("success",severPath,"0x200"));
     }
 
 

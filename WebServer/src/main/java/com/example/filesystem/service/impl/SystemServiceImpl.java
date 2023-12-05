@@ -29,10 +29,7 @@ import java.util.UUID;
 @Service
 public class SystemServiceImpl implements SystemService {
 
-    @Value("${filePath}")
-    private String path;
-    @Value("${projecturl}")
-    private String projecturl;
+
     @Autowired
     private UserMapper userMapper;
 
@@ -92,25 +89,6 @@ public class SystemServiceImpl implements SystemService {
         }
     }
 
-    /**
-     * @author zhuxinyu 2023-11-28
-     * 文件下载
-     */
-    @Override
-    @ApiOperation("文件下载")
-    @GetMapping(value ="/getimage",produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getPhoto(@RequestParam("imgUrl") String imgUrl) throws IOException{
-
-        File file = new File(path+"/"+imgUrl);
-
-        FileInputStream inputStream = new FileInputStream(file);
-
-        byte[] bytes = new byte[inputStream.available()];
-
-        inputStream.read(bytes, 0, inputStream.available());
-
-        return bytes;
-    }
 
     /**
      * @author zhuxinyu 2023-11-28

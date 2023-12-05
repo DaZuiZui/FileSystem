@@ -76,4 +76,14 @@ public interface FileService {
      * @return
      */
     ResponseVo moveFileOrFolder(MoveFileOrFolderBo moveFileOrFolderBo);
-    }
+
+
+    /**
+     * @author Oh...Yeah!!! 2023-11-13
+     *    文件下载
+     * @param
+     * @param
+     * @return String.class
+     */
+    public ResponseVo download(String reteFilePath, String loFilePath);
+}

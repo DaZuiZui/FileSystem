@@ -1,9 +1,10 @@
 package com.example.filesystem.service;
 
-import com.example.filesystem.pojo.User;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
 
 
 public interface UserService {
@@ -21,7 +22,7 @@ public interface UserService {
      * @param userDeleteBo
      * @return
      */
-    ResponseVo userDelete(UserDeleteBo userDeleteBo);
+    ResponseVo userDelete(UserDeleteBo userDeleteBo,@RequestParam("token")String token) throws IOException;
 
     /**
      * @author zhuxinyu 2023-11-28
@@ -54,6 +55,12 @@ public interface UserService {
      */
     ResponseVo userFindAll();
 
+    /**
+     * @author zhuxinyu 2023-12-04
+     * 查询所有的分页查询，模糊查询
+     * @param userFindAllBo
+     * @return
+     */
     ResponseVo findAllUser(UserFindAllBo userFindAllBo);
 
     /**

@@ -196,10 +196,9 @@ public class UserServiceImpl implements UserService {
             return new ResponseVo("token解析失败",null,"0x501");
         }
 
-        int start = userFindAllBo.getStart()*userFindAllBo.getSize();
+        int start = (userFindAllBo.getStart()-1)*userFindAllBo.getSize();
         userFindAllBo.setStart(start);
-        List<UserFindAllVo> list ;
-
+        List<UserFindAllVo> list;
 
         list = userMapper.findAllUser(userFindAllBo);
 

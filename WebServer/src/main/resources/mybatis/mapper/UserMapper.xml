@@ -106,19 +106,20 @@
             t1.username,t1.name,t1.grade,t1.org
         from
             user t1
-        where
-        <if test="username != null">
-            username like concat('%',#{username},'%') and
-        </if>
-        <if test="name != null">
-            name like concat('%',#{name},'%') and
-        </if>
-        <if test="grade != null">
-            grade like concat('%',#{grade},'%') and
-        </if>
-        <if test="org != null">
-            org like concat('%',#{org},'%')
-        </if>
+        <where>
+            <if test="username != null">
+                username like concat('%',#{username},'%') and
+            </if>
+            <if test="name != null">
+                name like concat('%',#{name},'%') and
+            </if>
+            <if test="grade != null">
+                grade like concat('%',#{grade},'%') and
+            </if>
+            <if test="org != null">
+                org like concat('%',#{org},'%')
+            </if>
+        </where>
         limit #{start},#{size}
     </select>
 

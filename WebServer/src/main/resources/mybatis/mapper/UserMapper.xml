@@ -103,7 +103,7 @@
     <select id="findAllUser" resultType="com.example.filesystem.pojo.vo.UserFindAllVo"
             parameterType="com.example.filesystem.pojo.bo.UserFindAllBo" >
         select
-            t1.username,t1.name,t1.grade,t1.org
+            t1.id,t1.username,t1.name,t1.grade,t1.org
         from
             user t1
         <where>

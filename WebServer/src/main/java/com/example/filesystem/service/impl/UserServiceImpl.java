@@ -198,13 +198,12 @@ public class UserServiceImpl implements UserService {
 
         int start = (userFindAllBo.getStart()-1)*userFindAllBo.getSize();
         userFindAllBo.setStart(start);
-        List<UserFindAllVo> list;
-
-        list = userMapper.findAllUser(userFindAllBo);
+        List<UserFindAllVo> list = userMapper.findAllUser(userFindAllBo);
+        List<UserFindAllVo> lists = userMapper.userFindAll();
 
         int count = userMapper.selectToGetCount(userFindAllBo);
         FindAllNewVo findAllVoNew = new FindAllNewVo();
-        findAllVoNew.setList(list);
+        findAllVoNew.setList(lists);
         findAllVoNew.setCount(count);
 
         return new ResponseVo("查询成功",findAllVoNew,"0x200");

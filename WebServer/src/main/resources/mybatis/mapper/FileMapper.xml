@@ -57,16 +57,6 @@
             status = 0
     </delete>
 
-    <!-- 显示自己的文件 -->
-    <select id="findOwnFile" resultType="com.example.filesystem.pojo.File">
-        select
-            *
-        from
-            file
-        where
-            create_by = #{createBy}
-    </select>
-
     <!-- 查看修改文件的人 -->
     <select id="selectUpdateByToFile" resultType="com.example.filesystem.pojo.vo.SelectUpdateByToFileVo">
         select
@@ -90,6 +80,18 @@
         where
             server_filename = #{serverFilename}
         limit 1
+    </select>
+
+    <!-- 显示自己的文件 -->
+    <select id="findOwnFile" resultType="com.example.filesystem.pojo.File">
+        select
+            *
+        from
+            file
+        where
+            create_by = #{createBy}
+        and
+            server_filename like concat(#{filePath},'%')
     </select>
 
 </mapper>

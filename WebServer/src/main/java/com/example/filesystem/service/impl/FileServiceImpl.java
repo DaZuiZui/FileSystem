@@ -5,7 +5,6 @@ import com.example.filesystem.mapper.FileMapper;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.ResponseVo;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
-import com.example.filesystem.pojo.vo.UpdateFileOrFolderVo;
 import com.example.filesystem.service.FileService;
 import com.example.filesystem.service.SystemService;
 import com.example.filesystem.util.ThreadLocalUtil;
@@ -40,13 +39,14 @@ public class FileServiceImpl implements FileService {
 
     /**
      * @param token
+     * @param filePath
      * @return
      * @author hln 2023-12-05
      * 显示自己的文件
      */
     @Override
 //    public String findOwnFile(@RequestParam("token") String token) {
-    public String findOwnFile(String token) {
+    public String findOwnFile(String filePath, String token) {
 
         //确认登录状态
         systemService.auth(token);
@@ -57,7 +57,7 @@ public class FileServiceImpl implements FileService {
             return JSONArray.toJSONString(new ResponseVo("token解析失败",null,"0x501"));
         }
 
-        List<com.example.filesystem.pojo.File> file = fileMapper.findOwnFile(userId);
+        List<com.example.filesystem.pojo.File> file = fileMapper.findOwnFile(userId,filePath);
 
         return JSONArray.toJSONString(new ResponseVo("查询成功",file,"0x200"));
     }

@@ -10,12 +10,13 @@ import java.io.IOException;
 public interface FileService {
 
     /**
-     * @param substring
+     * @param filePath
+     * @param token
      * @return
      * @author hln 2023-11-28
      * 显示自己的文件
      */
-    String findOwnFile(String substring);
+    String findOwnFile(String filePath, String token);
 
     /**
      * @param serverFilename

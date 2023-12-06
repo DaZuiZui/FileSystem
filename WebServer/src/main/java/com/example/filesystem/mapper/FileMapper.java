@@ -3,7 +3,6 @@ package com.example.filesystem.mapper;
 import com.example.filesystem.pojo.File;
 import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.SelectUpdateByToFileVo;
-import com.example.filesystem.pojo.vo.UpdateFileOrFolderVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,11 +12,12 @@ public interface FileMapper {
 
     /**
      * @param createBy
+     * @param filePath
      * @return
      * @author hln 2023-11-28
      * 显示自己的文件
      */
-    List<File> findOwnFile(Long createBy);
+    List<File> findOwnFile(Long createBy, String filePath);
 
     /**
      * @return

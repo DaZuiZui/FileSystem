@@ -80,11 +80,11 @@ public class FileController {
      */
     @RequestMapping(value = "/findOwnFile" , method = RequestMethod.POST)
     @ApiOperation("显示自己的文件")
-    public String findOwnFile(HttpServletRequest httpServletRequest){
+    public String findOwnFile(HttpServletRequest httpServletRequest,@RequestParam("filePath") String filePath){
 
         String token = httpServletRequest.getHeader("Cookie");
 
-        return fileService.findOwnFile(token.substring(6));
+        return fileService.findOwnFile(filePath,token.substring(6));
     }
 
     /**

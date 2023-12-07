@@ -47,9 +47,11 @@ public class UserServiceImpl implements UserService {
         String org = userInDB.getOrg();
         Long grade = userInDB.getGrade();
 
-        //登录时权限变为用户角色
+        //登录时权限变为用户角色，如果数据库中role没有数据权限，进行0的录入
         userInDB.setRole(0);
 
+
+        //用于给前端进行数据的展示
         HashMap<String,Object> map = new HashMap<>();
         map.put("token",token);
         map.put("role",role);

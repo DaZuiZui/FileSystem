@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         if (userInDB == null || !userInDB.getPassword().equals(userAddBo.getPassword())){
             return new ResponseVo("账号或密码错误",null,"0x201");
         }
-
+        //从数据库进行数据库的拿取
         String token = JwtUtil.createJWT(userInDB);
         Integer role = userInDB.getRole();
         String name = userInDB.getName();

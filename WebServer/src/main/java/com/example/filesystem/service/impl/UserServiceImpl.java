@@ -129,6 +129,7 @@ public class UserServiceImpl implements UserService {
         if(userId == null || userId == 0L){
             return new ResponseVo("token解析失败",null,"0x501");
         }
+        user.setId(userId);
         user.setUpdateBy(userId);
         user.setUpdateTime(new Date());
         Long aLong = userMapper.userUpdate(user);

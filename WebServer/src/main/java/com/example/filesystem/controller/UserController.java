@@ -22,8 +22,7 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private SystemService systemService;
+
     /**
      * @author zhuxinyu 2023-11-28
      *   用户登录
@@ -76,10 +75,10 @@ public class UserController {
      */
     @PostMapping("/update")
     @ApiOperation("修改用户通过id")
-    public String userUpdate(HttpServletRequest httpServletRequest, @RequestBody User user) throws IOException{
+    public String userUpdate(HttpServletRequest httpServletRequest, @RequestBody UserUpdateBo userUpdateBo ) throws IOException{
         String token = httpServletRequest.getHeader("Cookie");
 
-        return JSONArray.toJSONString(userService.userUpdate(user,token.substring(6)));
+        return JSONArray.toJSONString(userService.userUpdate(userUpdateBo,token.substring(6)));
     }
 
     /**

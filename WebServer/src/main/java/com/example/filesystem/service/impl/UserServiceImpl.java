@@ -117,11 +117,11 @@ public class UserServiceImpl implements UserService {
     /**
      * @author zhuxinyu 2023-11-28
      *     用户更新
-     * @param user
+     * @param userUpdateBo
      * @return
      */
     @Override
-    public ResponseVo userUpdate(User user , String token) {
+    public ResponseVo userUpdate(UserUpdateBo userUpdateBo , String token) {
         systemService.auth(token);
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
@@ -129,16 +129,14 @@ public class UserServiceImpl implements UserService {
         if(userId == null || userId == 0L){
             return new ResponseVo("token解析失败",null,"0x501");
         }
-        user.setId(userId);
-        user.setUpdateBy(userId);
-        user.setUpdateTime(new Date());
-        Long aLong = userMapper.userUpdate(user);
+        userUpdateBo.setId(userId);
+        Long aLong = userMapper.userUpdate(userUpdateBo);
 
         if(aLong == null || aLong.longValue() == 0L){
             return new ResponseVo("修改失败",null,"0x500");
         }
 
-        return new ResponseVo("修改成功",user.getId(),"0x200");
+        return new ResponseVo("修改成功",userId,"0x200");
     }
 
     /**

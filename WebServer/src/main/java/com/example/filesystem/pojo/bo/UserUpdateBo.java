@@ -1,7 +1,5 @@
 package com.example.filesystem.pojo.bo;
 
-import com.example.filesystem.pojo.User;
-
 import java.io.Serializable;
 
 /**
@@ -9,38 +7,49 @@ import java.io.Serializable;
  * 用户修改实体类
  */
 public class UserUpdateBo implements Serializable {
-    private String token;
-    private User user;//用户User
+    private Long id;
+    private Long grade;
+    private String org;
     public UserUpdateBo(){
 
     }
 
-    public UserUpdateBo(String token, User user) {
-        this.token = token;
-        this.user = user;
+    public UserUpdateBo(Long id, Long grade, String org) {
+        this.id = id;
+        this.grade = grade;
+        this.org = org;
     }
 
-    public String getToken() {
-        return token;
+    public Long getId() {
+        return id;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getGrade() {
+        return grade;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setGrade(Long grade) {
+        this.grade = grade;
+    }
+
+    public String getOrg() {
+        return org;
+    }
+
+    public void setOrg(String org) {
+        this.org = org;
     }
 
     @Override
     public String toString() {
         return "UserUpdateBo{" +
-                "token='" + token + '\'' +
-                ", user=" + user +
+                "id=" + id +
+                ", grade=" + grade +
+                ", org='" + org + '\'' +
                 '}';
     }
 }

@@ -35,10 +35,10 @@ public interface UserService {
     /**
      * @author zhuxinyu 2023-11-28
      *     用户更新
-     * @param user
+     * @param userUpdateBo
      * @return
      */
-    ResponseVo userUpdate(User user , String token) throws IOException;
+    ResponseVo userUpdate(UserUpdateBo userUpdateBo , String token) throws IOException;
 
     /**
      * @author zhuxinyu 2023-11-28

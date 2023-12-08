@@ -1,10 +1,7 @@
 package com.example.filesystem.mapper;
 
 import com.example.filesystem.pojo.User;
-import com.example.filesystem.pojo.bo.UserAddBo;
-import com.example.filesystem.pojo.bo.UserFindAllBo;
-import com.example.filesystem.pojo.bo.UserPagingToGetDataBo;
-import com.example.filesystem.pojo.bo.UserRegBo;
+import com.example.filesystem.pojo.bo.*;
 import com.example.filesystem.pojo.vo.UserFindAllVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -50,10 +47,10 @@ public interface UserMapper {
     /**
      * @author zhuxinyu 2023-11-28
      *      通过id修改用户
-     * @param user
+     * @param userUpdateBo
      * @return
      */
-    Long userUpdate(User user);
+    Long userUpdate(UserUpdateBo userUpdateBo);
 
     /**
      * @author zhuxinyu 2023-11-28

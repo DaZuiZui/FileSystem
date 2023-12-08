@@ -84,7 +84,7 @@
     <!-- 根据id查找用户 -->
     <select id="userSelect" resultType="com.example.filesystem.pojo.User" parameterType="java.lang.Long">
         select
-            t1.username,t1.name,t1.grade,t1.org,t1.role
+           t1.grade,t1.org
         from
             user t1
         where

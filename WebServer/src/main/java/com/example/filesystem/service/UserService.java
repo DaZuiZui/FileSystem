@@ -38,7 +38,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    ResponseVo userUpdate(User user);
+    ResponseVo userUpdate(User user , String token) throws IOException;
 
     /**
      * @author zhuxinyu 2023-11-28

@@ -11,7 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
@@ -77,13 +76,10 @@ public class UserController {
      */
     @PostMapping("/update")
     @ApiOperation("修改用户通过id")
-    public String userUpdate(@RequestBody User user){
-        Map<String, String> map = ThreadLocalUtil.mapThreadLocal.get();
-        ThreadLocalUtil.mapThreadLocal.remove();
-        if ( map.get("error") != null) {
-            return JSONArray.toJSONString(new ResponseVo<>(map.get("error"),null,map.get("code")));
-        }
-        return JSONArray.toJSONString(userService.userUpdate(user));
+    public String userUpdate(HttpServletRequest httpServletRequest, @RequestBody User user) throws IOException{
+        String token = httpServletRequest.getHeader("Cookie");
+
+        return JSONArray.toJSONString(userService.userUpdate(user,token.substring(6)));
     }
 
     /**

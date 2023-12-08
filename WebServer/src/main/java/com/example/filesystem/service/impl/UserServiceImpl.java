@@ -121,7 +121,8 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public ResponseVo userUpdate(User user) {
+    public ResponseVo userUpdate(User user , String token) {
+        systemService.auth(token);
         String userIdOfStr = (String) ThreadLocalUtil.mapThreadLocalOfJWT.get().get("userinfo").get("id");
         Long userId = Long.valueOf(userIdOfStr);
 

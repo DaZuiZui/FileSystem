@@ -70,8 +70,10 @@ public class UserController {
     /**
      * @author zhuxinyu 2023-11-28
      *      根据用户id修改
-     * @param user
+     * @param httpServletRequest
+     * @param userUpdateBo
      * @return
+     * @throws IOException
      */
     @PostMapping("/update")
     @ApiOperation("修改用户通过id")
